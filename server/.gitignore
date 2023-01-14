@@ -1,0 +1,5 @@
+.env
+.venv
+node_modules
+.vscode
+src/python/lib/__pycache__
