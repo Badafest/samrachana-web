@@ -16,7 +16,7 @@ The current version `version 0.x` is named after ancient Nepali architect Aranik
 
 > Learn more about the [versioning system we follow](https://link-to-docs-versioning).
 
-> If you find a bug or an issue, kindly post it in the [discussion forum](https://github.com/samrachana/Samrachana-Araniko/discussions)
+> If you find a bug or an issue, kindly post it in the [discussion forum](https://github.com/badafest/samrachana-web/discussions)
 
 ---
 
@@ -41,39 +41,47 @@ The current version `version 0.x` is named after ancient Nepali architect Aranik
     If you just want to try out Samrachana, or want to contribute to this repository, the best way to install it is to build from scratch. You can follow these steps to build from source:
 
     1.  Install `Python3.8.5` in your computer. [Official Downloads](https://www.python.org/ftp/python/3.8.5)
-    2.  Clone the repository by typing this in your terminal:  
-         `git clone https://github.com/samrachana/Samrachana-Araniko.git`
+    2.  Install `Node 18` in your computre. [Official Downloads](https://nodejs.org/dist/v18.13.0)
+    3.  Clone the repository by typing this in your terminal:  
+         `git clone https://github.com/badafest/samrachana-web.git`
 
         Or, click the button looking like:  
          ![clone button](./.github/img/code.png)  
          on top right.
 
-    3.  Create a virtual environmant and run `activate` by typing these on your terminal(Optional).  
+    4.  Create a virtual environmant and run `activate` by typing these on your terminal(Optional).  
         Replace `directory-of-cloned-repo` by the actual directory in which the repo is cloned. It is `Samrachana-Araniko` by default.  
         The second line creates virtual environment in a hidden folder titled `venv` inside the directory.  
         [(You can find the details Here)](https://docs.python.org/3/library/venv.html)  
         The last line activates virtual environment so that the dependencies are not installed globally.
 
         ```
-        cd ./directory-of-cloned-repo
+        cd ./directory-of-cloned-repo/server
         python3 -m venv ./.venv
         .venv/Scripts/activate
         ```
 
-    4.  Install the dependencies:
+    5.  Install the dependencies [`numba`]:
 
         ```
-        pip3 install -r ./src/requirements.txt
+        pip3 install -r ./src/python/requirements.txt
         ```
 
-    5.  Run the application:
+    6.  Install `node_modules`:
 
         ```
-        cd ./src
-        python3 app2d.py
+
+        npm install
         ```
 
-        > When you run the application later, make sure to activate virtual environment first.
+    7.  Make `env` file from `env.example` and run the server: [For general user, the commented values should work just fine]
+
+        ```
+
+        npm run dev
+        ```
+
+        > Currently only the server is implemented. You can run python functions by sending a POST request with `func` and `params` in json body
 
 ---
 
