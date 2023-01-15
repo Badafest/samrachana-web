@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: OpenSans;
+  src: url("opensans-normal.ttf");
+}
+
+@font-face {
+  font-family: OpenSans;
+  font-style: italic;
+  src: url("opensans-italic.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  font-family: OpenSans;
+  @apply rounded;
+}
+
+.grid {
+  background-image: url(/grid.svg);
+  background-position: bottom left;
+}

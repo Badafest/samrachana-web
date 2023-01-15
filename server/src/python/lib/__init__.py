@@ -4,11 +4,12 @@ from lib.loadMethods import loadPlotData, loadPlotData2, loadPlotData3, loadPlot
 from lib.supportMethods import supportPlotData, supportPlotData2
 from lib.simulationMethods import vectorDiagramDataForces2D, vectorDiagramDataForces2Dcomp, vectorDiagramDataTrussForces2Dcomp,\
     vectorDiagramDataMoments2D, vectorDiagramDataAngles2Dcomp, vectorDiagramDataDisps2Dcomp, vectorDiagramDataTrussDisps2Dcomp, \
-        simulateFrameMotion2D, simulateTrussMotion2, simulateFrameMotion3D, simulateTrussMotion, timeGraphData,\
-        vectorDiagramDataForces3D, vectorDiagramDataForces3Dcomp, vectorDiagramDataTrussForces3Dcomp,vectorDiagramDataMoments3D, \
-            vectorDiagramDataMoments3Dcomp, vectorDiagramDataAngles3Dcomp, vectorDiagramDataDisps3Dcomp, vectorDiagramDataTrussDisps3Dcomp,\
-                fillAnimationFrames, getRescaledData, makeFunData
+    simulateFrameMotion2D, simulateTrussMotion2, simulateFrameMotion3D, simulateTrussMotion, timeGraphData,\
+    vectorDiagramDataForces3D, vectorDiagramDataForces3Dcomp, vectorDiagramDataTrussForces3Dcomp, vectorDiagramDataMoments3D, \
+    vectorDiagramDataMoments3Dcomp, vectorDiagramDataAngles3Dcomp, vectorDiagramDataDisps3Dcomp, vectorDiagramDataTrussDisps3Dcomp,\
+    fillAnimationFrames, getRescaledData, makeFunData
 from lib.functionDefinitions import make, make2d, structify, structify2d
+from lib.extensions import snap2seg, snap2seg2, convert
 
 _app2d = {
     "_format": {
@@ -28,7 +29,8 @@ _app2d = {
         "_truss_data": {
             "_action": trussActionData,
             "_response": trussResponseData
-        }
+        },
+        "_snap": snap2seg2
     },
     "_loads": {
         "_plot": {
@@ -58,10 +60,10 @@ _app2d = {
             "_motion": simulateTrussMotion2
         },
         "_timegraph": timeGraphData,
-        "_uitls": {
+        "_utils": {
             "_make_data": makeFunData,
             "_rescale": getRescaledData,
-            "_fill": fillAnimationFrames
+            "_fill": fillAnimationFrames,
         }
     }
 }
@@ -84,7 +86,8 @@ _app3d = {
         "_truss_data": {
             "_action": trussActionData,
             "_response": trussResponseData
-        }
+        },
+        "_snap": snap2seg
     },
     "_loads": {
         "_plot": {
@@ -115,10 +118,10 @@ _app3d = {
             "_motion": simulateTrussMotion
         },
         "_timegraph": timeGraphData,
-        "_uitls": {
+        "_utils": {
             "_make_data": makeFunData,
             "_rescale": getRescaledData,
-            "_fill": fillAnimationFrames
+            "_fill": fillAnimationFrames,
         }
     }
 }
