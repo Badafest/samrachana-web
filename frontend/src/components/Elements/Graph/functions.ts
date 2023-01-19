@@ -1,17 +1,33 @@
-export const getCoordinates = (
+export const getCoordinates: (
+  context: CanvasRenderingContext2D,
+  pixelX: number,
+  pixelY: number,
+  originX: number,
+  originY: number,
+  zoom: number
+) => [number, number] = (
+  context: CanvasRenderingContext2D,
   pixelX: number,
   pixelY: number,
   originX: number = 0,
   originY: number = 0,
   zoom: number = 50
 ) => {
-  const coordX = originX + pixelX / zoom;
-  const maxY = window.innerHeight / zoom;
-  const coordY = maxY - originY - pixelY / zoom;
+  const { x, y } = context.canvas.getBoundingClientRect();
+  const coordX = originX + (pixelX - Math.round(x)) / zoom;
+  const maxY = context.canvas.height / zoom;
+  const coordY = maxY - originY - (pixelY - Math.round(y)) / zoom;
   return [coordX, coordY];
 };
 
-export const getPixels = (
+export const getPixels: (
+  context: CanvasRenderingContext2D,
+  coordX: number,
+  coordY: number,
+  originX: number,
+  originY: number,
+  zoom: number
+) => [number, number] = (
   context: CanvasRenderingContext2D,
   coordX: number,
   coordY: number,
@@ -19,13 +35,12 @@ export const getPixels = (
   originY: number = 0,
   zoom: number = 50
 ) => {
-  const canvasRect = context.canvas.getBoundingClientRect();
-  const pixelX = zoom * (coordX - originX);
-  const maxY = window.innerHeight / zoom;
-  const pixelY = zoom * (maxY - originY - coordY);
-  const pixelXOffset = pixelX - canvasRect.x;
-  const pixelYOffset = pixelY - canvasRect.y;
-  return [parseInt(`${pixelXOffset}`), parseInt(`${pixelYOffset}`)];
+  const { x, y } = context.canvas.getBoundingClientRect();
+  const pixelX = zoom * (coordX - originX) + Math.round(x);
+  const maxY = context.canvas.height / zoom;
+  const pixelY = zoom * (maxY - originY - coordY) + Math.round(y);
+
+  return [parseInt(`${pixelX}`), parseInt(`${pixelY}`)];
 };
 
 export const getGridBkg = (
@@ -62,5 +77,20 @@ ${
   return "url(data:image/svg+xml;base64," + encoded + ")";
 };
 
-export const getGridScale = (zoom: number) =>
-  zoom < 100 ? zoom * Math.ceil(100 / zoom) : zoom / Math.ceil(zoom / 100);
+export const getGridScale = (zoom: number) => {
+  if (zoom > 500) {
+    return 0.1;
+  } else if (zoom > 50) {
+    return 1;
+  } else if (zoom > 5) {
+    return 10;
+  } else {
+    return 100;
+  }
+};
+
+export const getRounded = (num: number, digits: number) =>
+  Math.round(num * 10 ** digits) / 10 ** digits;
+
+export const getNoDigits = (num: number) =>
+  num.toString().split(".")[1]?.length || 0;

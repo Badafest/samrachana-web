@@ -1,8 +1,8 @@
 import { forwardRef, MouseEventHandler } from "react";
 
 export interface ICanvasProps {
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   onMouseDown?: MouseEventHandler;
   onMouseMove?: MouseEventHandler;
   onMouseUp?: MouseEventHandler;

@@ -1,0 +1,16 @@
+{
+  "platinum": {
+    "--primary": "#eaeaea",
+    "--primary_light": "#f5f5f5",
+    "--primary_dark": "#d6d6d6",
+    "--secondary": "#893168",
+    "--secondary_light": "#bc5d98",
+    "--secondary_dark": "#250b1b",
+    "--contrast1": "#2e1c2b",
+    "--contrast1_light": "#8b5582",
+    "--contrast1_dark": "#191018",
+    "--contrast2": "#1c1c2e",
+    "--contrast2_light": "#55588b",
+    "--contrast2_dark": "#111019"
+  }
+}

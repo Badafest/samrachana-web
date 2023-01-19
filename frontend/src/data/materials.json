@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Default",
+    "E": 1,
+    "G": 1,
+    "alpha": 1,
+    "density": 1
+  },
+  {
+    "name": "Steel HR",
+    "E": 200000000000,
+    "G": 76923076923,
+    "alpha": 0.000012,
+    "density": 7850
+  },
+  {
+    "name": "Stainless Steel",
+    "E": 194000000000,
+    "G": 74615384615,
+    "alpha": 0.000012,
+    "density": 7850
+  },
+  {
+    "name": "Concrete LS",
+    "E": 22000000000,
+    "G": 9565217391,
+    "alpha": 0.000011,
+    "density": 2400
+  },
+  {
+    "name": "Concrete MS",
+    "E": 32000000000,
+    "G": 13913043478,
+    "alpha": 0.000011,
+    "density": 2400
+  },
+  {
+    "name": "Concrete HS",
+    "E": 40000000000,
+    "G": 17391304348,
+    "alpha": 0.000011,
+    "density": 2400
+  },
+  {
+    "name": "Cast iron Gray",
+    "E": 95000000000,
+    "G": 38000000000,
+    "alpha": 0.000012,
+    "density": 7200
+  },
+  {
+    "name": "Cast iron Malleable",
+    "E": 170000000000,
+    "G": 68000000000,
+    "alpha": 0.000012,
+    "density": 7200
+  },
+  {
+    "name": "Aluminium",
+    "E": 72000000000,
+    "G": 27067669173,
+    "alpha": 0.000023,
+    "density": 2800
+  },
+  {
+    "name": "Glass Silicon",
+    "E": 70000000000,
+    "G": 29914529915,
+    "alpha": 0.000008,
+    "density": 2400
+  },
+  {
+    "name": "Copper",
+    "E": 120000000000,
+    "G": 45112781955,
+    "alpha": 0.000017,
+    "density": 8900
+  },
+  {
+    "name": "Bronze",
+    "E": 100000000000,
+    "G": 37313432836,
+    "alpha": 0.00002,
+    "density": 8800
+  },
+  {
+    "name": "Brass",
+    "E": 105000000000,
+    "G": 38888888889,
+    "alpha": 0.000019,
+    "density": 8470
+  }
+]

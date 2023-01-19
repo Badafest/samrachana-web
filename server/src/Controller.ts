@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { spawn } from "node:child_process";
+import socketService from "./socket.service";
 import ENV from "./vars";
 
 async function Controller(req: Request, res: Response) {
-  const { func, param } = req.body;
+  const { user_id, func, param } = req.body;
 
   try {
     const ls = spawn(ENV.PYTHON, [
@@ -12,9 +13,13 @@ async function Controller(req: Request, res: Response) {
       JSON.stringify(param),
     ]);
 
-    const sendData = (data: any) => {
+    const sendData = async (data: any) => {
       ls.stdout.removeAllListeners();
       ls.stderr.removeAllListeners();
+      const client = await socketService.getClient(user_id);
+      if (client && client.socket) {
+        client.socket.send(data.toString().replaceAll("\r\n", ", "));
+      }
       return res.status(200).json({
         message: "Script run successfully",
         call: { func, param },

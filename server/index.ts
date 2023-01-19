@@ -1,24 +1,27 @@
-import express from "express";
+import webSocket from "ws";
+import http from "http";
+import app from "./app";
 import ENV from "./src/vars";
-import { Request, Response } from "express";
-import Controller from "./src/Controller";
-import cors from "cors";
+import socketService from "./src/socket.service";
 
-const app = express();
+const server = http.createServer(app);
 
-app.use(cors());
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.post("/api", Controller);
-
-app.use("*", (_: Request, res: Response) => {
-  res.status(404).json({
-    error: "Not Found",
-  });
+const wss = new webSocket.Server({ server });
+wss.on("connection", async function (ws: WebSocket, request: any) {
+  const user_id = await socketService.getUniqueId();
+  try {
+    await socketService.insertClient(user_id, ws);
+    console.log("socket connected => ", user_id);
+    ws.send("Keep your user id safe => " + user_id);
+  } catch (error) {
+    console.log(error);
+    console.log("socket not connected => ", user_id);
+    return;
+  }
+  wss.on("message", (message) => {});
+  wss.on("close", () => {});
 });
 
-app.listen(ENV.PORT, async () => {
+server.listen(ENV.PORT, async () => {
   console.log("server listening on port => ", ENV.PORT);
 });

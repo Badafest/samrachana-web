@@ -1,0 +1,27 @@
+[
+  {
+    "name": "select",
+    "hint": "Select members to edit or delete them.",
+    "icon_name": "select_tool"
+  },
+  {
+    "name": "line",
+    "hint": "Add a linear segment to structure.",
+    "icon_name": "line_tool"
+  },
+  {
+    "name": "arc",
+    "hint": "Add a circular segment (arc) to structure.",
+    "icon_name": "arc_tool"
+  },
+  {
+    "name": "quad",
+    "hint": "Add a parabolic segment (arch) to structure.",
+    "icon_name": "quad_tool"
+  },
+  {
+    "name": "point",
+    "hint": "Add a point load to a segmnent in the structure.",
+    "icon_name": "point_tool"
+  }
+]

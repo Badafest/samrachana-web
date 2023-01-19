@@ -1,0 +1,122 @@
+[
+  {
+    "System": "SI",
+    "Quantity": "Force",
+    "Symbol": "N",
+    "Conversion": 1
+  },
+  {
+    "System": "SI",
+    "Quantity": "Force",
+    "Symbol": "kN",
+    "Conversion": 1000
+  },
+  {
+    "System": "SI",
+    "Quantity": "Force",
+    "Symbol": "MN",
+    "Conversion": 1000000
+  },
+  {
+    "System": "SI",
+    "Quantity": "Force",
+    "Symbol": "GN",
+    "Conversion": 1000000000
+  },
+  {
+    "System": "SI",
+    "Quantity": "Force",
+    "Symbol": "kgf",
+    "Conversion": 9.80665
+  },
+  {
+    "System": "SI",
+    "Quantity": "Force",
+    "Symbol": "tf",
+    "Conversion": 9806.65
+  },
+  {
+    "System": "SI",
+    "Quantity": "Force",
+    "Symbol": "Custom",
+    "Conversion": 1
+  },
+  {
+    "System": "SI",
+    "Quantity": "Length",
+    "Symbol": "m",
+    "Conversion": 1
+  },
+  {
+    "System": "SI",
+    "Quantity": "Length",
+    "Symbol": "mm",
+    "Conversion": 0.001
+  },
+  {
+    "System": "SI",
+    "Quantity": "Length",
+    "Symbol": "cm",
+    "Conversion": 0.01
+  },
+  {
+    "System": "SI",
+    "Quantity": "Length",
+    "Symbol": "dam",
+    "Conversion": 10
+  },
+  {
+    "System": "SI",
+    "Quantity": "Length",
+    "Symbol": "Custom",
+    "Conversion": 10
+  },
+  {
+    "System": "ENG",
+    "Quantity": "Force",
+    "Symbol": "pdl",
+    "Conversion": 1
+  },
+  {
+    "System": "ENG",
+    "Quantity": "Force",
+    "Symbol": "lbf",
+    "Conversion": 32.1740485564304
+  },
+  {
+    "System": "ENG",
+    "Quantity": "Force",
+    "Symbol": "ozf",
+    "Conversion": 2.0108780347769
+  },
+  {
+    "System": "ENG",
+    "Quantity": "Force",
+    "Symbol": "kip",
+    "Conversion": 32174.0485564304
+  },
+  {
+    "System": "ENG",
+    "Quantity": "Force",
+    "Symbol": "Custom",
+    "Conversion": 32174.0485564304
+  },
+  {
+    "System": "ENG",
+    "Quantity": "Length",
+    "Symbol": "ft",
+    "Conversion": 1
+  },
+  {
+    "System": "ENG",
+    "Quantity": "Length",
+    "Symbol": "in",
+    "Conversion": 0.083333333333333
+  },
+  {
+    "System": "ENG",
+    "Quantity": "Length",
+    "Symbol": "Custom",
+    "Conversion": 3
+  }
+]
