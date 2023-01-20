@@ -18,7 +18,13 @@ async function Controller(req: Request, res: Response) {
       ls.stderr.removeAllListeners();
       const client = await socketService.getClient(user_id);
       if (client && client.socket) {
-        client.socket.send(data.toString().replaceAll("\r\n", ", "));
+        client.socket.send(
+          JSON.stringify({
+            func,
+            param,
+            data: data.toString().replaceAll("\r\n", ", "),
+          })
+        );
       }
       return res.status(200).json({
         message: "Script run successfully",

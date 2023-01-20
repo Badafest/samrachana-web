@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IAppState {
   data: {
+    socket_id: string;
     active_tool: string;
     status: string;
     layout: "1" | "2H" | "2V" | "3H" | "3V" | "4";
@@ -11,7 +12,8 @@ interface IAppState {
 
 const initialState: IAppState = {
   data: {
-    active_tool: "none",
+    socket_id: "",
+    active_tool: "select",
     status: "everything good :)",
     layout: "1",
     tool_coords: [],

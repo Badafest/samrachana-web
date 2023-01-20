@@ -1,11 +1,16 @@
-import { useAppDispatch, useAppSelector } from "../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { useState, useEffect } from "react";
 
-import { addSegment, ISegment } from "../slices/structure.slice";
-import { changeAppData, clearToolCoords } from "../slices/app.slice";
+import { addSegment, ISegment } from "../../slices/structure.slice";
+import {
+  changeAppData,
+  clearToolCoords,
+  updateToolCoords,
+} from "../../slices/app.slice";
 
-import materials from "../data/materials.json";
-import sections from "../data/sections.json";
+import materials from "../../data/materials.json";
+import sections from "../../data/sections.json";
+import { getSegmentPlotData } from "../../controller/plot.controller";
 
 export default function AddSegmentForm() {
   const { active_tool, tool_coords } = useAppSelector(
@@ -14,6 +19,7 @@ export default function AddSegmentForm() {
 
   const { segments } = useAppSelector((state) => state.structure.members);
   const { material, section } = useAppSelector((state) => state.settings.data);
+  const { socket_id } = useAppSelector((state) => state.app.data);
   const dispatch = useAppDispatch();
 
   const [segMaterial, setSegMaterial] = useState<string>(material);
@@ -39,11 +45,12 @@ export default function AddSegmentForm() {
       setP1(tool_coords[0]);
     } else if (tool_coords.length === 2) {
       setP3(tool_coords[1]);
-      type === "line" &&
+      if (type === "line") {
         setP2([
           0.5 * (tool_coords[0][0] + tool_coords[1][0]),
           0.5 * (tool_coords[0][1] + tool_coords[1][1]),
         ]);
+      }
     } else if (tool_coords.length === 3 && type !== "line") {
       setP2(tool_coords[2]);
     } else {
@@ -53,7 +60,22 @@ export default function AddSegmentForm() {
     }
   }, [tool_coords]);
 
-  const handleAddSegment = () => {
+  useEffect(() => {
+    if (tool_coords.length === 2 && type === "line") {
+      handleAddSegment();
+      const lastClickedPoint = tool_coords.at(-1);
+      dispatch(clearToolCoords());
+      lastClickedPoint && dispatch(updateToolCoords(lastClickedPoint));
+    }
+    if (tool_coords.length === 3 && type !== "line") {
+      handleAddSegment();
+      const lastClickedPoint = tool_coords.at(-2);
+      dispatch(clearToolCoords());
+      lastClickedPoint && dispatch(updateToolCoords(lastClickedPoint));
+    }
+  }, [P2]);
+
+  const handleAddSegment = async () => {
     const userMaterial = materials.find((item) => item.name === segMaterial);
     const userSection = sections.find((item) => item.name === segSection);
 
@@ -77,6 +99,8 @@ export default function AddSegmentForm() {
       density: userMaterial?.density || 1,
       shapeFactor: userSection?.k || 1,
     };
+
+    await getSegmentPlotData(newSegment, socket_id);
 
     dispatch(addSegment(newSegment));
     dispatch(changeAppData({ status: `${name} added to structure!` }));

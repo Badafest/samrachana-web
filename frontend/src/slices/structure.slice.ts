@@ -51,6 +51,11 @@ export interface ISupport {
 
 export interface IStructure {
   members: { segments: ISegment[]; loads: ILoad[]; supports: ISupport[] };
+  data: {
+    plot: {
+      [name: string]: [number, number][];
+    };
+  };
 }
 
 const initialState: IStructure = {
@@ -58,6 +63,9 @@ const initialState: IStructure = {
     segments: [],
     loads: [],
     supports: [],
+  },
+  data: {
+    plot: {},
   },
 };
 
@@ -157,6 +165,15 @@ export const structureSlice = createSlice({
         (support) => support.name !== payload
       );
     },
+    addPlotData: (
+      state,
+      { payload }: PayloadAction<{ name: string; data: [number, number][] }>
+    ) => {
+      state.data.plot = {
+        ...state.data.plot,
+        ...{ [payload.name]: payload.data },
+      };
+    },
   },
 });
 
@@ -170,4 +187,5 @@ export const {
   deleteLoad,
   deleteSupport,
   deleteSegment,
+  addPlotData,
 } = structureSlice.actions;

@@ -1,7 +1,7 @@
-import { CSSProperties } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { useTheme } from "./themes/useTheme";
-
 import "./themes/theme.css";
+
 import { useAppSelector } from "./store";
 
 import TitleBar from "./components/TitleBar";
@@ -20,8 +20,28 @@ import RightSideBar from "./components/RightSideBar";
 
 import StatusBar from "./components/StatusBar";
 
+import useMessageHandler from "./hooks/useMessageHandler";
+import useKeypressHandler from "./hooks/useKeypressHandler";
+
 function App() {
   const theme = useTheme();
+  const [socket, setSocket] = useState<WebSocket>();
+
+  const keypressHandler = useKeypressHandler();
+
+  useEffect(() => {
+    if (!socket) {
+      const ws = new WebSocket(import.meta.env.VITE_WS_URL);
+      setSocket(ws);
+    }
+    addEventListener("keypress", keypressHandler);
+  }, []);
+
+  const socketMessageHandler = useMessageHandler();
+
+  useEffect(() => {
+    socket?.addEventListener("message", socketMessageHandler);
+  }, [socket]);
 
   return (
     <div
@@ -53,10 +73,6 @@ function DefaultTableView() {
 
 function DefaultLineView() {
   return <EditableView default="line" />;
-}
-
-function DefaultSimView() {
-  return <EditableView default="sim" />;
 }
 
 function MultiViews() {

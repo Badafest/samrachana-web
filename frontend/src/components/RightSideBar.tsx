@@ -1,4 +1,4 @@
-import AddSegmentForm from "../forms/AddSegmentForm";
+import AddSegmentForm from "./forms/AddSegmentForm";
 import { useAppSelector } from "../store";
 import tools from "../data/tools.json";
 

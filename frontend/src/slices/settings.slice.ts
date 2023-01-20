@@ -10,6 +10,14 @@ interface ISettingsState {
     main_grid_color: string;
     main_grid_opacity: number;
     main_grid_dots: boolean;
+    temp_plot_color: string;
+    temp_plot_width: number;
+    seg_plot_color: string;
+    seg_plot_width: number;
+    load_plot_color: string;
+    load_plot_width: number;
+    support_plot_color: string;
+    support_plot_width: number;
     line_grid_color: string;
     line_grid_opacity: number;
     line_grid_dots: boolean;
@@ -19,7 +27,6 @@ interface ISettingsState {
   };
 }
 
-// Define the initial state using that type
 const userSettings = localStorage.getItem("settings");
 const initialState: ISettingsState = {
   data: userSettings
@@ -33,6 +40,14 @@ const initialState: ISettingsState = {
         main_grid_color: "#000000",
         main_grid_opacity: 0.5,
         main_grid_dots: false,
+        temp_plot_color: "#222222",
+        temp_plot_width: 1,
+        seg_plot_color: "#0000ff",
+        seg_plot_width: 3,
+        load_plot_color: "#ff0000",
+        load_plot_width: 2,
+        support_plot_color: "#00ff00",
+        support_plot_width: 2,
         line_grid_color: "#000000",
         line_grid_opacity: 0.5,
         line_grid_dots: false,

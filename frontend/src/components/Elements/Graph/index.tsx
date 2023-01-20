@@ -12,6 +12,7 @@ interface IGraphProps {
     zoom: number,
     origin: [number, number]
   ) => void;
+  updateDependency?: any[];
   onToolMouseMove?: (
     context: CanvasRenderingContext2D | null,
     zoom: number,
@@ -33,6 +34,7 @@ function Graph({
   dots,
   opacity,
   updateFunction,
+  updateDependency = [],
   onToolMouseMove,
   onToolMouseDown,
 }: IGraphProps) {
@@ -62,8 +64,8 @@ function Graph({
   }, []);
 
   useEffect(() => {
-    updateFunction && updateFunction(context, zoom, origin as [number, number]);
-  }, [zoom, origin]);
+    updateFunction && updateFunction(context, zoom, origin);
+  }, [zoom, origin, ...updateDependency]);
 
   return (
     <>

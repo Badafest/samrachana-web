@@ -50,7 +50,7 @@ export default function useEvents(
         ...prev.slice(-2),
         [getRounded(x, precision), getRounded(y, precision)],
       ]);
-      if (active_tool !== "none" && onToolMouseDown) {
+      if (active_tool !== "select" && onToolMouseDown) {
         onToolMouseDown(context, zoom, origin, prevCoords, tempCoords);
       }
     }
@@ -97,7 +97,7 @@ export default function useEvents(
       if (active) {
         setOrigin((prev) => updateOrigin(prev, [x, y], lastCoords));
       }
-      if (active_tool !== "none" && onToolMouseMove) {
+      if (active_tool !== "select" && onToolMouseMove) {
         onToolMouseMove(context, zoom, origin, prevCoords, tempCoords);
       }
     }
@@ -114,7 +114,6 @@ export default function useEvents(
         zoom
       );
       setZoom((prev) => {
-        console.log(prev);
         const newZoom = event.deltaY > 0 ? prev * 0.8 : prev * 1.2;
         const finalZoom =
           newZoom <= 10 ? 10 : newZoom >= 1000 ? 1000 : Math.round(newZoom);

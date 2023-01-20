@@ -35,10 +35,9 @@ export const getPixels: (
   originY: number = 0,
   zoom: number = 50
 ) => {
-  const { x, y } = context.canvas.getBoundingClientRect();
-  const pixelX = zoom * (coordX - originX) + Math.round(x);
+  const pixelX = zoom * (coordX - originX);
   const maxY = context.canvas.height / zoom;
-  const pixelY = zoom * (maxY - originY - coordY) + Math.round(y);
+  const pixelY = zoom * (maxY - originY - coordY);
 
   return [parseInt(`${pixelX}`), parseInt(`${pixelY}`)];
 };

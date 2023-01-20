@@ -1,7 +1,7 @@
 import { useAppSelector } from "../store";
 
 export default function StatusBar() {
-  const { status } = useAppSelector((state) => state.app.data);
+  const { status, socket_id } = useAppSelector((state) => state.app.data);
   const { material, section, units, precision } = useAppSelector(
     (state) => state.settings.data
   );
@@ -10,6 +10,7 @@ export default function StatusBar() {
   );
   return (
     <div className="h-[24px] px-2 flex justify-between items-center text-contrast1 text-sm bg-primary">
+      <span className="text-xs italic">{socket_id}</span>
       <span>{status}</span>
       <span>
         {segments.length} segments | {loads.length} loads | {supports.length}{" "}
