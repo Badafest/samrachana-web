@@ -4,9 +4,13 @@ export function snapToSegment(
   point: [number, number]
 ) {
   const xv = [P3[0] - P1[0], P3[1] - P1[1]];
+  const len = Math.hypot(...xv);
   const fv = [point[0] - P1[0], point[1] - P1[1]];
-  const dot = xv[0] * fv[0] + xv[1] * fv[1];
-  return [P1[0] + dot * xv[0], P1[1] + dot * xv[1]] as [number, number];
+  const dot = (xv[0] * fv[0] + xv[1] * fv[1]) / len;
+  return [P1[0] + (dot * xv[0]) / len, P1[1] + (dot * xv[1]) / len] as [
+    number,
+    number
+  ];
 }
 
 export function snapToPoint(

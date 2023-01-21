@@ -2,13 +2,9 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import { useState, useEffect } from "react";
 
 import { addLoad, ILoad } from "../../slices/structure.slice";
-import {
-  changeAppData,
-  clearToolCoords,
-  updateToolCoords,
-} from "../../slices/app.slice";
+import { changeAppData, clearToolCoords } from "../../slices/app.slice";
 
-const loadTypes = [
+export const loadTypes = [
   "Misfit",
   "Temperature",
   "Moment",
@@ -20,6 +16,7 @@ const loadTypes = [
 ];
 
 import { getLoadPlotData } from "../../controller/plot.controller";
+import { snapToSegment } from "../../utils/snapFunctions";
 
 export default function AddLoadForm() {
   const { active_tool, tool_coords } = useAppSelector(
@@ -88,8 +85,8 @@ export default function AddLoadForm() {
         normal,
         psName,
         parentSegment,
-        P1,
-        P3,
+        P1: snapToSegment(parentSegment.P1, parentSegment.P3, P1),
+        P3: snapToSegment(parentSegment.P1, parentSegment.P3, P3),
       };
 
       console.log(newLoad);

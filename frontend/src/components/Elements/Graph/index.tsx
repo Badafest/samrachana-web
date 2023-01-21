@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Canvas from "../../Canvas";
+import Canvas from "../Canvas";
 import { getGridBkg, getGridScale } from "./functions";
 import useEvents from "./useEvents";
 
