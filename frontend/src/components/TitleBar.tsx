@@ -1,4 +1,4 @@
-import { changeAppData } from "../slices/app.slice";
+import { changeAppData, clearToolCoords } from "../slices/app.slice";
 import { useAppDispatch, useAppSelector } from "../store";
 import Icon from "./Elements/Icon";
 
@@ -25,6 +25,7 @@ function ToolIcon({ tool, icon }: { tool: string; icon: string }) {
         active_tool === tool ? "border-secondary" : "border-primary_dark"
       }`}
       onClick={() => {
+        dispatch(clearToolCoords());
         dispatch(changeAppData({ active_tool: tool }));
       }}
     >

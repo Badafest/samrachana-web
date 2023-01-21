@@ -1,6 +1,8 @@
 import AddSegmentForm from "./forms/AddSegmentForm";
 import { useAppSelector } from "../store";
 import tools from "../data/tools.json";
+import AddSupportForm from "./forms/AddSupportForm";
+import AddLoadForm from "./forms/AddLoadForm";
 
 export default function RightSideBar() {
   const { active_tool } = useAppSelector((state) => state.app.data);
@@ -12,11 +14,28 @@ export default function RightSideBar() {
   );
 }
 
-function getToolHint(tool: string) {}
-
 function ToolForm({ active_tool }: { active_tool: string }) {
   if (["line", "arc", "quad"].indexOf(active_tool) !== -1) {
     return <AddSegmentForm />;
+  } else if (
+    ["fixed", "hinge", "roller", "internal_hinge", "node", "custom"].indexOf(
+      active_tool
+    ) !== -1
+  ) {
+    return <AddSupportForm />;
+  } else if (
+    [
+      "moment",
+      "point",
+      "linear",
+      "uniform",
+      "quadratic",
+      "cubic",
+      "misfit",
+      "temperature",
+    ].indexOf(active_tool) !== -1
+  ) {
+    return <AddLoadForm />;
   } else {
     return <></>;
   }

@@ -86,10 +86,11 @@ export default function MainGraph() {
   ) => {
     if (context) {
       updateFunction(context, zoom, origin);
-      tool_coords.length < 3 &&
+      tool_coords.length &&
+        tool_coords.length < 3 &&
         drawPath(
           context,
-          [...tool_coords, tempCoords],
+          [...tool_coords, tempCoords, tool_coords[0]],
           origin,
           zoom,
           temp_plot_color,
@@ -104,7 +105,7 @@ export default function MainGraph() {
       dots={main_grid_dots}
       opacity={main_grid_opacity}
       updateFunction={updateFunction}
-      updateDependency={[active_tool]}
+      updateDependency={[active_tool, Object.values(plot)]}
       onToolMouseDown={onToolMouseDown}
       onToolMouseMove={onToolMouseMove}
     />

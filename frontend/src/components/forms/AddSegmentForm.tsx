@@ -1,7 +1,11 @@
 import { useAppDispatch, useAppSelector } from "../../store";
 import { useState, useEffect } from "react";
 
-import { addSegment, ISegment } from "../../slices/structure.slice";
+import {
+  addPlotData,
+  addSegment,
+  ISegment,
+} from "../../slices/structure.slice";
 import {
   changeAppData,
   clearToolCoords,
@@ -10,7 +14,11 @@ import {
 
 import materials from "../../data/materials.json";
 import sections from "../../data/sections.json";
-import { getSegmentPlotData } from "../../controller/plot.controller";
+import {
+  getSegmentPlotData,
+  parseNumpyArray,
+} from "../../controller/plot.controller";
+import drawPath from "../../utils/drawPath";
 
 export default function AddSegmentForm() {
   const { active_tool, tool_coords } = useAppSelector(
@@ -131,7 +139,7 @@ export default function AddSegmentForm() {
         <input
           name="name"
           id="name"
-          className="bg-primary cursor-pointer rounded px-2 py-1  text-secondary outline-none border focus-border-secondary"
+          className="bg-primary rounded px-2 py-1  text-secondary outline-none border focus-border-secondary"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />

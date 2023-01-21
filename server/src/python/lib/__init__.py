@@ -33,10 +33,8 @@ _app2d = {
         "_snap": snap2seg2
     },
     "_loads": {
-        "_plot": {
-            "_others": loadPlotData2,
-            "_moment": loadPlotData4
-        }
+        "_plot_normal": loadPlotData2,
+        "_plot_extra": loadPlotData4
     },
     "_supports": {
         "_plot": supportPlotData2

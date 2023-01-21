@@ -2,5 +2,11 @@
   "l": "line",
   "a": "arc",
   "q": "quad",
+  "f": "fixed",
+  "h": "hinge",
+  "i": "internal_hinge",
+  "n": "node",
+  "c": "custom",
+  "r": "roller",
   "x": "select"
 }

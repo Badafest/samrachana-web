@@ -38,11 +38,8 @@ export interface ISupport {
     | "Internal Hinge"
     | "Node"
     | "001"
-    | "010"
     | "100"
     | "101"
-    | "110"
-    | "111"
     | "011";
   location: [number, number];
   normal: [number, number];
@@ -98,58 +95,7 @@ export const structureSlice = createSlice({
       }
       state.members.supports = [...state.members.supports, payload];
     },
-    editSegment: (
-      state,
-      {
-        payload,
-      }: PayloadAction<{
-        name: string;
-        [key: string]: number | [number, number] | string;
-      }>
-    ) => {
-      const segment = state.members.segments.find(
-        (x) => x.name === payload.name
-      );
-      if (segment) {
-        state.members.segments = [
-          ...state.members.segments,
-          { ...segment, ...payload },
-        ];
-      }
-    },
-    editLoad: (
-      state,
-      {
-        payload,
-      }: PayloadAction<{
-        name: string;
-        [key: string]: number | [number, number] | string;
-      }>
-    ) => {
-      const load = state.members.loads.find((x) => x.name === payload.name);
-      if (load) {
-        state.members.loads = [...state.members.loads, { ...load, ...payload }];
-      }
-    },
-    editSupport: (
-      state,
-      {
-        payload,
-      }: PayloadAction<{
-        name: string;
-        [key: string]: number | [number, number] | string;
-      }>
-    ) => {
-      const support = state.members.supports.find(
-        (x) => x.name === payload.name
-      );
-      if (support) {
-        state.members.supports = [
-          ...state.members.supports,
-          { ...support, ...payload },
-        ];
-      }
-    },
+
     deleteSegment: (state, { payload }: PayloadAction<string>) => {
       state.members.segments = state.members.segments.filter(
         (segment) => segment.name !== payload
@@ -174,6 +120,11 @@ export const structureSlice = createSlice({
         ...{ [payload.name]: payload.data },
       };
     },
+    deletePlotData: (state, { payload }: PayloadAction<string>) => {
+      if (state.data.plot[payload]) {
+        delete state.data.plot[payload];
+      }
+    },
   },
 });
 
@@ -181,9 +132,6 @@ export const {
   addSegment,
   addLoad,
   addSupport,
-  editLoad,
-  editSegment,
-  editSupport,
   deleteLoad,
   deleteSupport,
   deleteSegment,

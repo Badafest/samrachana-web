@@ -16,6 +16,7 @@ export default function useEvents(
     prevCoords: [number, number][],
     tempCoords: [number, number]
   ) => void,
+
   onToolMouseDown?: (
     context: CanvasRenderingContext2D,
     zoom: number,

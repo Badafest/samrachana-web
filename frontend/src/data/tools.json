@@ -1,27 +1,92 @@
 [
   {
     "name": "select",
-    "hint": "Select members to edit or delete them.",
+    "hint": "Select members to edit or delete them",
     "icon_name": "select_tool"
   },
   {
     "name": "line",
-    "hint": "Add a linear segment to structure.",
+    "hint": "Add a linear segment to structure",
     "icon_name": "line_tool"
   },
   {
     "name": "arc",
-    "hint": "Add a circular segment (arc) to structure.",
+    "hint": "Add a circular segment (arc) to structure",
     "icon_name": "arc_tool"
   },
   {
     "name": "quad",
-    "hint": "Add a parabolic segment (arch) to structure.",
+    "hint": "Add a parabolic segment (arch) to structure",
     "icon_name": "quad_tool"
   },
   {
+    "name": "fixed",
+    "hint": "Add a fixed suppport to structure",
+    "icon_name": "fixed_tool"
+  },
+  {
+    "name": "hinge",
+    "hint": "Add a hinged suppport to structure",
+    "icon_name": "hinge_tool"
+  },
+  {
+    "name": "roller",
+    "hint": "Add a roller suppport to structure",
+    "icon_name": "roller_tool"
+  },
+  {
+    "name": "internal_hinge",
+    "hint": "Add an internal hinge to structure",
+    "icon_name": "internal_hinge_tool"
+  },
+  {
+    "name": "node",
+    "hint": "Add a node to structure",
+    "icon_name": "node_tool"
+  },
+  {
+    "name": "custom",
+    "hint": "Add a custom suppport to structure",
+    "icon_name": "custom_tool"
+  },
+  {
+    "name": "moment",
+    "hint": "Add a moment load to a segment of structure",
+    "icon_name": "moment_tool"
+  },
+  {
     "name": "point",
-    "hint": "Add a point load to a segmnent in the structure.",
+    "hint": "Add a point load to a segment of structure",
     "icon_name": "point_tool"
+  },
+  {
+    "name": "uniform",
+    "hint": "Add a uniformly distributed load to a segment of structure",
+    "icon_name": "udl_tool"
+  },
+  {
+    "name": "linear",
+    "hint": "Add a uniformly varying load to a segment of structure",
+    "icon_name": "uvl_tool"
+  },
+  {
+    "name": "quadratic",
+    "hint": "Add a quadratic distributed load to a segment of structure",
+    "icon_name": "poly_quad_tool"
+  },
+  {
+    "name": "cubic",
+    "hint": "Add a cubic distributed load to a segment of structure",
+    "icon_name": "poly_cubic_tool"
+  },
+  {
+    "name": "misfit",
+    "hint": "Add a misfit load to a segment of structure",
+    "icon_name": "misfit_tool"
+  },
+  {
+    "name": "temperature",
+    "hint": "Add a temperature load to a segment of structure",
+    "icon_name": "tempr_tool"
   }
 ]
