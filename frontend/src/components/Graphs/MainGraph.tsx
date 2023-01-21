@@ -1,7 +1,10 @@
 import { useDispatch } from "react-redux";
-import { updateToolCoords } from "../../slices/app.slice";
+import { changeAppData, updateToolCoords } from "../../slices/app.slice";
 import { useAppSelector } from "../../store";
 import drawPath from "../../utils/drawPath";
+import getBoundingPoints, {
+  isPointBounded,
+} from "../../utils/getBoundingPoints";
 import Graph from "../Elements/Graph";
 
 export default function MainGraph() {
@@ -21,7 +24,7 @@ export default function MainGraph() {
   const dispatch = useDispatch();
 
   const { plot } = useAppSelector((state) => state.structure.data);
-  const { active_tool } = useAppSelector((state) => state.app.data);
+  const { active_tool, selected } = useAppSelector((state) => state.app.data);
   const { segments, loads, supports } = useAppSelector(
     (state) => state.structure.members
   );
@@ -71,31 +74,46 @@ export default function MainGraph() {
     context: CanvasRenderingContext2D | null,
     zoom: number,
     origin: [number, number],
+    active: boolean,
     prevCoords: [number, number][],
     tempCoords: [number, number]
   ) => {
-    dispatch(updateToolCoords(tempCoords));
+    if (active_tool === "select") {
+      const newSelected = Object.keys(plot).find((key) => {
+        const boundingPoints = getBoundingPoints(plot[key]);
+        return (
+          key !== selected &&
+          isPointBounded(boundingPoints[0], boundingPoints[1], tempCoords)
+        );
+      });
+      dispatch(changeAppData({ selected: newSelected || "" }));
+    } else {
+      dispatch(updateToolCoords(tempCoords));
+    }
   };
 
   const onToolMouseMove = (
     context: CanvasRenderingContext2D | null,
     zoom: number,
     origin: [number, number],
+    active: boolean,
     prevCoords: [number, number][],
     tempCoords: [number, number]
   ) => {
     if (context) {
       updateFunction(context, zoom, origin);
-      tool_coords.length &&
-        tool_coords.length < 3 &&
-        drawPath(
-          context,
-          [...tool_coords, tempCoords, tool_coords[0]],
-          origin,
-          zoom,
-          temp_plot_color,
-          temp_plot_width
-        );
+      if (active_tool !== "select") {
+        tool_coords.length &&
+          tool_coords.length < 3 &&
+          drawPath(
+            context,
+            [...tool_coords, tempCoords, tool_coords[0]],
+            origin,
+            zoom,
+            temp_plot_color,
+            temp_plot_width
+          );
+      }
     }
   };
 

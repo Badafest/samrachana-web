@@ -1,8 +1,9 @@
-import AddSegmentForm from "./forms/AddSegmentForm";
+import SegmentForm from "./forms/SegmentForm";
 import { useAppSelector } from "../store";
 import tools from "../data/tools.json";
-import AddSupportForm from "./forms/AddSupportForm";
-import AddLoadForm from "./forms/AddLoadForm";
+import SupportForm from "./forms/SupportForm";
+import LoadForm from "./forms/LoadForm";
+import EditDeleteForm from "./forms/EditDeleteForm";
 
 export default function RightSideBar() {
   const { active_tool } = useAppSelector((state) => state.app.data);
@@ -16,13 +17,13 @@ export default function RightSideBar() {
 
 function ToolForm({ active_tool }: { active_tool: string }) {
   if (["line", "arc", "quad"].indexOf(active_tool) !== -1) {
-    return <AddSegmentForm />;
+    return <SegmentForm />;
   } else if (
     ["fixed", "hinge", "roller", "internal_hinge", "node", "custom"].indexOf(
       active_tool
     ) !== -1
   ) {
-    return <AddSupportForm />;
+    return <SupportForm />;
   } else if (
     [
       "moment",
@@ -35,8 +36,11 @@ function ToolForm({ active_tool }: { active_tool: string }) {
       "temperature",
     ].indexOf(active_tool) !== -1
   ) {
-    return <AddLoadForm />;
-  } else {
+    return <LoadForm />;
+  } else if (active_tool === "select") {
+    return <EditDeleteForm />;
+  }
+  {
     return <></>;
   }
 }

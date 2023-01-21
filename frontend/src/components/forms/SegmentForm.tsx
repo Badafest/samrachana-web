@@ -2,8 +2,9 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import { useState, useEffect } from "react";
 
 import {
-  addPlotData,
   addSegment,
+  deletePlotData,
+  deleteSegment,
   ISegment,
 } from "../../slices/structure.slice";
 import {
@@ -14,13 +15,9 @@ import {
 
 import materials from "../../data/materials.json";
 import sections from "../../data/sections.json";
-import {
-  getSegmentPlotData,
-  parseNumpyArray,
-} from "../../controller/plot.controller";
-import drawPath from "../../utils/drawPath";
+import { getSegmentPlotData } from "../../controller/plot.controller";
 
-export default function AddSegmentForm() {
+export default function SegmentForm({ edit }: { edit?: ISegment }) {
   const { active_tool, tool_coords } = useAppSelector(
     (state) => state.app.data
   );
@@ -34,52 +31,60 @@ export default function AddSegmentForm() {
   const [segSection, setSegSection] = useState<string>(section);
 
   const [type, setType] = useState<"line" | "arc" | "quad">(
-    active_tool as "line" | "arc" | "quad"
+    edit?.type || (active_tool as "line" | "arc" | "quad")
   );
 
-  const [name, setName] = useState<string>(`segment#${segments.length + 1}`);
+  const [name, setName] = useState<string>(
+    edit?.name || `segment#${segments.length + 1}`
+  );
 
-  const [P1, setP1] = useState<[number, number]>([0, 0]);
-  const [P2, setP2] = useState<[number, number]>([0, 0]);
-  const [P3, setP3] = useState<[number, number]>([0, 0]);
+  const [P1, setP1] = useState<[number, number]>(edit?.P1 || [0, 0]);
+  const [P2, setP2] = useState<[number, number]>(edit?.P2 || [0, 0]);
+  const [P3, setP3] = useState<[number, number]>(edit?.P3 || [0, 0]);
 
   useEffect(() => {
-    dispatch(clearToolCoords());
-    setType(active_tool as "line" | "arc" | "quad");
+    if (!edit) {
+      dispatch(clearToolCoords());
+      setType(active_tool as "line" | "arc" | "quad");
+    }
   }, [active_tool]);
 
   useEffect(() => {
-    if (tool_coords.length === 1) {
-      setP1(tool_coords[0]);
-    } else if (tool_coords.length === 2) {
-      setP3(tool_coords[1]);
-      if (type === "line") {
-        setP2([
-          0.5 * (tool_coords[0][0] + tool_coords[1][0]),
-          0.5 * (tool_coords[0][1] + tool_coords[1][1]),
-        ]);
+    if (!edit) {
+      if (tool_coords.length === 1) {
+        setP1(tool_coords[0]);
+      } else if (tool_coords.length === 2) {
+        setP3(tool_coords[1]);
+        if (type === "line") {
+          setP2([
+            0.5 * (tool_coords[0][0] + tool_coords[1][0]),
+            0.5 * (tool_coords[0][1] + tool_coords[1][1]),
+          ]);
+        }
+      } else if (tool_coords.length === 3 && type !== "line") {
+        setP2(tool_coords[2]);
+      } else {
+        setP1([0, 0]);
+        setP2([0, 0]);
+        setP3([0, 0]);
       }
-    } else if (tool_coords.length === 3 && type !== "line") {
-      setP2(tool_coords[2]);
-    } else {
-      setP1([0, 0]);
-      setP2([0, 0]);
-      setP3([0, 0]);
     }
   }, [tool_coords]);
 
   useEffect(() => {
-    if (tool_coords.length === 2 && type === "line") {
-      handleAddSegment();
-      const lastClickedPoint = tool_coords.at(-1);
-      dispatch(clearToolCoords());
-      lastClickedPoint && dispatch(updateToolCoords(lastClickedPoint));
-    }
-    if (tool_coords.length === 3 && type !== "line") {
-      handleAddSegment();
-      const lastClickedPoint = tool_coords.at(-2);
-      dispatch(clearToolCoords());
-      lastClickedPoint && dispatch(updateToolCoords(lastClickedPoint));
+    if (!edit) {
+      if (tool_coords.length === 2 && type === "line") {
+        handleAddSegment();
+        const lastClickedPoint = tool_coords.at(-1);
+        dispatch(clearToolCoords());
+        lastClickedPoint && dispatch(updateToolCoords(lastClickedPoint));
+      }
+      if (tool_coords.length === 3 && type !== "line") {
+        handleAddSegment();
+        const lastClickedPoint = tool_coords.at(-2);
+        dispatch(clearToolCoords());
+        lastClickedPoint && dispatch(updateToolCoords(lastClickedPoint));
+      }
     }
   }, [P2]);
 
@@ -90,33 +95,53 @@ export default function AddSegmentForm() {
     const isNameTaken = segments.find((item) => item.name === name);
 
     const newName = `segment#${segments.length + (isNameTaken ? 1 : 2)}`;
-    setName(newName);
+    if (!edit) {
+      setName(newName);
+    }
 
     const newSegment: ISegment = {
-      name: isNameTaken ? newName : name,
+      name: edit ? name : isNameTaken ? newName : name,
       class: "segment",
       type,
       P1,
       P3,
       P2,
-      I: userSection?.Iyy || 1,
-      area: userSection?.A || 1,
-      youngsModulus: userMaterial?.E || 1,
-      shearModulus: userMaterial?.G || 1,
-      alpha: userMaterial?.alpha || 1,
-      density: userMaterial?.density || 1,
-      shapeFactor: userSection?.k || 1,
+      I: userSection?.Iyy || edit?.I || 1,
+      area: userSection?.A || edit?.area || 1,
+      youngsModulus: userMaterial?.E || edit?.youngsModulus || 1,
+      shearModulus: userMaterial?.G || edit?.shearModulus || 1,
+      alpha: userMaterial?.alpha || edit?.alpha || 1,
+      density: userMaterial?.density || edit?.density || 1,
+      shapeFactor: userSection?.k || edit?.shapeFactor || 1,
     };
 
-    await getSegmentPlotData(newSegment, socket_id);
-
-    dispatch(addSegment(newSegment));
-    dispatch(changeAppData({ status: `${name} added to structure!` }));
+    dispatch(deleteSegment(edit?.name || ""));
+    try {
+      await getSegmentPlotData(newSegment, socket_id);
+      dispatch(addSegment(newSegment));
+      dispatch(changeAppData({ status: `${name} added to structure!` }));
+      if (edit?.name !== name) {
+        dispatch(deletePlotData(edit?.name || ""));
+      }
+    } catch (error: any) {
+      edit && dispatch(addSegment(edit));
+      dispatch(
+        changeAppData({
+          status: error?.response?.data?.error || error?.message || error,
+        })
+      );
+    }
   };
 
   const handleFormSubmit = (event: any) => {
     event.preventDefault();
     handleAddSegment();
+  };
+
+  const handleDelete = (event: any) => {
+    event.preventDefault();
+    dispatch(deleteSegment(edit?.name || ""));
+    dispatch(deleteSegment(edit?.name || ""));
   };
 
   return (
@@ -253,8 +278,19 @@ export default function AddSegmentForm() {
 
         <div className="h-[1px] w-full bg-primary_dark" />
         <button className="bg-secondary text-primary_light rounded px-2 py-1 border hover-border-contrast1">
-          Add Segment
+          {edit ? "Edit" : "Add"} Segment
         </button>
+        {edit && (
+          <>
+            <div className="h-[1px] w-full bg-primary_dark" />
+            <button
+              className="bg-secondary text-primary_light rounded px-2 py-1 border hover-border-contrast1"
+              onClick={handleDelete}
+            >
+              Delete Segment
+            </button>
+          </>
+        )}
       </form>
     </div>
   );

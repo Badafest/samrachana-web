@@ -136,4 +136,5 @@ export const {
   deleteSupport,
   deleteSegment,
   addPlotData,
+  deletePlotData,
 } = structureSlice.actions;

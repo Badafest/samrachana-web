@@ -1,10 +1,17 @@
 import { useAppDispatch, useAppSelector } from "../../store";
 import { useState, useEffect } from "react";
 
-import { addSupport, ISupport } from "../../slices/structure.slice";
+import {
+  addSupport,
+  deletePlotData,
+  deleteSupport,
+  ISegment,
+  ISupport,
+} from "../../slices/structure.slice";
 import { changeAppData, clearToolCoords } from "../../slices/app.slice";
 
 import { getSupportPlotData } from "../../controller/plot.controller";
+import { snapToSegment } from "../../utils/snapFunctions";
 
 const supportTypes = {
   fixed: "Fixed",
@@ -31,45 +38,68 @@ type TSupportTypes =
   | "011"
   | "101";
 
-export default function AddSupportForm() {
+export default function SupportForm({ edit }: { edit?: ISupport }) {
   const { active_tool, tool_coords } = useAppSelector(
     (state) => state.app.data
   );
 
-  const { supports } = useAppSelector((state) => state.structure.members);
+  const { supports, segments } = useAppSelector(
+    (state) => state.structure.members
+  );
   const { socket_id } = useAppSelector((state) => state.app.data);
   const dispatch = useAppDispatch();
 
-  const [type, setType] = useState<TSupportTypes>("Fixed");
+  const [type, setType] = useState<TSupportTypes>(edit?.type || "Fixed");
 
-  const [name, setName] = useState<string>(`support#${supports.length + 1}`);
+  const [name, setName] = useState<string>(
+    edit?.name || `support#${supports.length + 1}`
+  );
 
-  const [location, setLocation] = useState<[number, number]>([0, 0]);
-  const [normal, setNormal] = useState<[number, number]>([0, 1]);
-  const [normalAngle, setNormalAngle] = useState<number>(90);
-  const [settlement, setSettlement] = useState<[number, number, number]>([
-    0, 0, 0,
-  ]);
+  const [location, setLocation] = useState<[number, number]>(
+    edit?.location || [0, 0]
+  );
+  const [normal, setNormal] = useState<[number, number]>(
+    edit?.normal || [0, 1]
+  );
+  const [normalAngle, setNormalAngle] = useState<number>(
+    Math.round((180 * Math.atan2(normal[1], normal[0])) / Math.PI)
+  );
+  const [settlement, setSettlement] = useState<[number, number, number]>(
+    edit?.settlement || [0, 0, 0]
+  );
+
+  const [snapTo, setSnapTo] = useState<string>("");
 
   useEffect(() => {
-    dispatch(clearToolCoords());
-    setType(
-      supportTypes[
-        active_tool as "fixed" | "hinge" | "internal_hinge" | "roller" | "node"
-      ] as TSupportTypes
-    );
+    if (!edit) {
+      dispatch(clearToolCoords());
+      setType(
+        supportTypes[
+          active_tool as
+            | "fixed"
+            | "hinge"
+            | "internal_hinge"
+            | "roller"
+            | "node"
+        ] as TSupportTypes
+      );
+    }
   }, [active_tool]);
 
   useEffect(() => {
-    if (tool_coords.length === 1) {
-      setLocation(tool_coords[0]);
+    if (!edit) {
+      if (tool_coords.length === 1) {
+        setLocation(tool_coords[0]);
+      }
     }
   }, [tool_coords]);
 
   useEffect(() => {
-    if (tool_coords.length === 1) {
-      handleAddSupport();
-      dispatch(clearToolCoords());
+    if (!edit) {
+      if (tool_coords.length === 1) {
+        handleAddSupport();
+        dispatch(clearToolCoords());
+      }
     }
   }, [location]);
 
@@ -77,21 +107,46 @@ export default function AddSupportForm() {
     const isNameTaken = supports.find((item) => item.name === name);
 
     const newName = `support#${supports.length + (isNameTaken ? 1 : 2)}`;
-    setName(newName);
+    if (!edit) {
+      setName(newName);
+    }
+
+    const snapParent = segments.find((item) => item.name === snapTo);
+    const snappedLocation = snapParent
+      ? snapToSegment(snapParent?.P1, snapParent?.P3, location)
+      : location;
 
     const newSupport: ISupport = {
-      name: isNameTaken ? newName : name,
+      name: edit ? name : isNameTaken ? newName : name,
       class: "support",
       type,
-      location,
+      location: snappedLocation,
       normal,
       settlement,
     };
 
-    await getSupportPlotData(newSupport, socket_id);
+    dispatch(deleteSupport(edit?.name || ""));
+    try {
+      await getSupportPlotData(newSupport, socket_id);
+      dispatch(addSupport(newSupport));
+      dispatch(changeAppData({ status: `${name} added to structure!` }));
+      if (edit?.name !== name) {
+        dispatch(deletePlotData(edit?.name || ""));
+      }
+    } catch (error: any) {
+      edit && dispatch(addSupport(edit));
+      dispatch(
+        changeAppData({
+          status: error?.response?.data?.error || error?.message || error,
+        })
+      );
+    }
+  };
 
-    dispatch(addSupport(newSupport));
-    dispatch(changeAppData({ status: `${name} added to structure!` }));
+  const handleDelete = (event: any) => {
+    event.preventDefault();
+    dispatch(deleteSupport(edit?.name || ""));
+    dispatch(deletePlotData(edit?.name || ""));
   };
 
   const handleFormSubmit = (event: any) => {
@@ -157,6 +212,22 @@ export default function AddSupportForm() {
             }}
           />
         </div>
+        <label>Snap To</label>
+        <select
+          name="type"
+          id="type"
+          className="bg-primary cursor-pointer rounded px-2 py-1  text-secondary outline-none border focus-border-secondary"
+          value={snapTo}
+          onChange={(e) => setSnapTo(e.target.value)}
+        >
+          <option value="">None</option>
+          {segments.map((segment, index) => (
+            <option value={segment.name} key={index}>
+              {segment.name}
+            </option>
+          ))}
+        </select>
+
         <label>Normal</label>
         <div className="flex gap-1 flex-col">
           <input
@@ -234,12 +305,22 @@ export default function AddSupportForm() {
             }}
           />
         </div>
-        <div className="h-[1px] w-full bg-primary_dark" />
 
         <div className="h-[1px] w-full bg-primary_dark" />
         <button className="bg-secondary text-primary_light rounded px-2 py-1 border hover-border-contrast1">
-          Add Support
+          {edit ? "Edit" : "Add"} Support
         </button>
+        {edit && (
+          <>
+            <div className="h-[1px] w-full bg-primary_dark" />
+            <button
+              className="bg-secondary text-primary_light rounded px-2 py-1 border hover-border-contrast1"
+              onClick={handleDelete}
+            >
+              Delete Support
+            </button>
+          </>
+        )}
       </form>
     </div>
   );

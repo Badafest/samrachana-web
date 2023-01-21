@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from "react";
+import { changeAppData } from "../slices/app.slice";
 import { ILoad, ISegment, ISupport } from "../slices/structure.slice";
-import { useAppSelector } from "../store";
-import { loadTypes } from "./forms/AddLoadForm";
+import { useAppDispatch, useAppSelector } from "../store";
+import { getRounded } from "./Elements/Graph/functions";
+import Icon from "./Elements/Icon";
+import { loadTypes } from "./forms/LoadForm";
 
 export default function MemberTree() {
   const [width, setWidth] = useState<number>(0);
@@ -47,9 +50,23 @@ export default function MemberTree() {
 }
 
 function SegmentTable({ segment }: { segment: ISegment }) {
+  const { precision } = useAppSelector((state) => state.settings.data);
+  const dispatch = useAppDispatch();
   return (
     <details className="bg-primary_light rounded px-2 py-1">
-      <summary>{segment.name}</summary>
+      <summary className="flex items-center justify-between">
+        {segment.name}{" "}
+        <Icon
+          className="border border-secondary rounded"
+          onClick={() => {
+            dispatch(
+              changeAppData({ active_tool: "select", selected: segment.name })
+            );
+          }}
+        >
+          edit_delete_tool
+        </Icon>
+      </summary>
       <div className="grid grid-cols-4 px-4 py-1">
         <div className="col-span-2">
           <div>Type</div>
@@ -67,21 +84,24 @@ function SegmentTable({ segment }: { segment: ISegment }) {
         <div className="col-span-2">
           <div>{segment.type}</div>
           <div>
-            <span>{segment.P1[0]}</span>, <span>{segment.P1[1]}</span>
+            <span>{getRounded(segment.P1[0], precision)}</span>,{" "}
+            <span>{getRounded(segment.P1[1], precision)}</span>
           </div>
           <div>
-            <span>{segment.P3[0]}</span>, <span>{segment.P3[1]}</span>
+            <span>{getRounded(segment.P3[0], precision)}</span>,{" "}
+            <span>{getRounded(segment.P3[1], precision)}</span>
           </div>
           <div>
-            <span>{segment.P2[0]}</span>, <span>{segment.P2[1]}</span>
+            <span>{getRounded(segment.P2[0], precision)}</span>,{" "}
+            <span>{getRounded(segment.P2[1], precision)}</span>
           </div>
-          <div>{segment.area}</div>
-          <div>{segment.I}</div>
-          <div>{segment.youngsModulus}</div>
-          <div>{segment.shearModulus}</div>
-          <div>{segment.shapeFactor}</div>
-          <div>{segment.alpha}</div>
-          <div>{segment.density}</div>
+          <div>{getRounded(segment.area, precision)}</div>
+          <div>{getRounded(segment.I, precision)}</div>
+          <div>{getRounded(segment.youngsModulus, precision)}</div>
+          <div>{getRounded(segment.shearModulus, precision)}</div>
+          <div>{getRounded(segment.shapeFactor, precision)}</div>
+          <div>{getRounded(segment.alpha, precision)}</div>
+          <div>{getRounded(segment.density, precision)}</div>
         </div>
       </div>
     </details>
@@ -89,9 +109,23 @@ function SegmentTable({ segment }: { segment: ISegment }) {
 }
 
 function LoadTable({ load }: { load: ILoad }) {
+  const { precision } = useAppSelector((state) => state.settings.data);
+  const dispatch = useAppDispatch();
   return (
     <details className="bg-primary_light rounded px-2 py-1">
-      <summary>{load.name}</summary>
+      <summary className="flex justify-between items-center">
+        {load.name}
+        <Icon
+          className="border border-secondary rounded"
+          onClick={() => {
+            dispatch(
+              changeAppData({ active_tool: "select", selected: load.name })
+            );
+          }}
+        >
+          edit_delete_tool
+        </Icon>
+      </summary>
       <div className="grid grid-cols-4 px-4 py-1">
         <div className="col-span-2">
           <div>Type</div>
@@ -104,15 +138,18 @@ function LoadTable({ load }: { load: ILoad }) {
         <div className="col-span-2">
           <div>{loadTypes[load.degree + 4]}</div>
           <div>{load.psName}</div>
-          <div>{load.peak}</div>
+          <div>{getRounded(load.peak, precision)}</div>
           <div>
-            <span>{load.P1[0]}</span>, <span>{load.P1[1]}</span>
+            <span>{getRounded(load.P1[0], precision)}</span>,{" "}
+            <span>{getRounded(load.P1[1], precision)}</span>
           </div>
           <div>
-            <span>{load.P3[0]}</span>, <span>{load.P3[1]}</span>
+            <span>{getRounded(load.P3[0], precision)}</span>,{" "}
+            <span>{getRounded(load.P3[1], precision)}</span>
           </div>
           <div>
-            <span>{load.normal[0]}</span>, <span>{load.normal[1]}</span>
+            <span>{getRounded(load.normal[0], precision)}</span>,{" "}
+            <span>{getRounded(load.normal[1], precision)}</span>
           </div>
         </div>
       </div>
@@ -121,9 +158,23 @@ function LoadTable({ load }: { load: ILoad }) {
 }
 
 function SupportTable({ support }: { support: ISupport }) {
+  const { precision } = useAppSelector((state) => state.settings.data);
+  const dispatch = useAppDispatch();
   return (
     <details className="bg-primary_light rounded px-2 py-1">
-      <summary>{support.name}</summary>
+      <summary className="flex items-center justify-between">
+        {support.name}
+        <Icon
+          className="border border-secondary rounded"
+          onClick={() => {
+            dispatch(
+              changeAppData({ active_tool: "select", selected: support.name })
+            );
+          }}
+        >
+          edit_delete_tool
+        </Icon>
+      </summary>
       <div className="grid grid-cols-4 px-4 py-1">
         <div className="col-span-2">
           <div>Type</div>
@@ -134,16 +185,17 @@ function SupportTable({ support }: { support: ISupport }) {
         <div className="col-span-2">
           <div>{support.type}</div>
           <div>
-            <span>{support.location[0]}</span>,{" "}
-            <span>{support.location[1]}</span>
+            <span>{getRounded(support.location[0], precision)}</span>,{" "}
+            <span>{getRounded(support.location[1], precision)}</span>
           </div>
           <div>
-            <span>{support.normal[0]}</span>, <span>{support.normal[1]}</span>
+            <span>{getRounded(support.normal[0], precision)}</span>,{" "}
+            <span>{getRounded(support.normal[1], precision)}</span>
           </div>
           <div>
-            <span>{support.settlement[0]}</span>,{" "}
-            <span>{support.settlement[1]}</span>,{" "}
-            <span>{support.settlement[2]}</span>
+            <span>{getRounded(support.settlement[0], precision)}</span>,{" "}
+            <span>{getRounded(support.settlement[1], precision)}</span>,{" "}
+            <span>{getRounded(support.settlement[2], precision)}</span>
           </div>
         </div>
       </div>

@@ -13,6 +13,7 @@ export default function useEvents(
     context: CanvasRenderingContext2D,
     zoom: number,
     origin: [number, number],
+    active: boolean,
     prevCoords: [number, number][],
     tempCoords: [number, number]
   ) => void,
@@ -21,6 +22,7 @@ export default function useEvents(
     context: CanvasRenderingContext2D,
     zoom: number,
     origin: [number, number],
+    active: boolean,
     prevCoords: [number, number][],
     tempCoords: [number, number]
   ) => void
@@ -31,8 +33,6 @@ export default function useEvents(
   const [tempCoords, setTempCoords] = useState<[number, number]>([0, 0]);
   const [origin, setOrigin] = useState<[number, number]>([0, 0]);
   const [zoom, setZoom] = useState(100);
-
-  const { active_tool } = useAppSelector((state) => state.app.data);
 
   const { precision } = useAppSelector((state) => state.settings.data);
 
@@ -51,9 +51,9 @@ export default function useEvents(
         ...prev.slice(-2),
         [getRounded(x, precision), getRounded(y, precision)],
       ]);
-      if (active_tool !== "select" && onToolMouseDown) {
-        onToolMouseDown(context, zoom, origin, prevCoords, tempCoords);
-      }
+
+      onToolMouseDown &&
+        onToolMouseDown(context, zoom, origin, active, prevCoords, tempCoords);
     }
   };
 
@@ -98,9 +98,8 @@ export default function useEvents(
       if (active) {
         setOrigin((prev) => updateOrigin(prev, [x, y], lastCoords));
       }
-      if (active_tool !== "select" && onToolMouseMove) {
-        onToolMouseMove(context, zoom, origin, prevCoords, tempCoords);
-      }
+      onToolMouseMove &&
+        onToolMouseMove(context, zoom, origin, active, prevCoords, tempCoords);
     }
   };
 

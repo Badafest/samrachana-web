@@ -17,6 +17,7 @@ interface IGraphProps {
     context: CanvasRenderingContext2D | null,
     zoom: number,
     origin: [number, number],
+    active: boolean,
     prevCoords: [number, number][],
     tempCoords: [number, number]
   ) => void;
@@ -24,6 +25,7 @@ interface IGraphProps {
     context: CanvasRenderingContext2D | null,
     zoom: number,
     origin: [number, number],
+    active: boolean,
     prevCoords: [number, number][],
     tempCoords: [number, number]
   ) => void;

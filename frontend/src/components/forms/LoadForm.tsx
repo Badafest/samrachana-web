@@ -1,7 +1,12 @@
 import { useAppDispatch, useAppSelector } from "../../store";
 import { useState, useEffect } from "react";
 
-import { addLoad, ILoad } from "../../slices/structure.slice";
+import {
+  addLoad,
+  deleteLoad,
+  deletePlotData,
+  ILoad,
+} from "../../slices/structure.slice";
 import { changeAppData, clearToolCoords } from "../../slices/app.slice";
 
 export const loadTypes = [
@@ -18,7 +23,7 @@ export const loadTypes = [
 import { getLoadPlotData } from "../../controller/plot.controller";
 import { snapToSegment } from "../../utils/snapFunctions";
 
-export default function AddLoadForm() {
+export default function LoadForm({ edit }: { edit?: ILoad }) {
   const { active_tool, tool_coords } = useAppSelector(
     (state) => state.app.data
   );
@@ -29,41 +34,55 @@ export default function AddLoadForm() {
   const { socket_id } = useAppSelector((state) => state.app.data);
   const dispatch = useAppDispatch();
 
-  const [name, setName] = useState<string>(`load#${loads.length + 1}`);
-  const [type, setType] = useState<string>("");
-  const [peak, setPeak] = useState<number>(1);
+  const [name, setName] = useState<string>(
+    edit?.name || `load#${loads.length + 1}`
+  );
+  const [type, setType] = useState<string>(loadTypes[(edit?.degree || 0) + 4]);
+  const [peak, setPeak] = useState<number>(edit?.peak || 1);
 
-  const [P1, setP1] = useState<[number, number]>([0, 0]);
-  const [P3, setP3] = useState<[number, number]>([0, 0]);
-  const [normal, setNormal] = useState<[number, number]>([0, -1]);
-  const [normalAngle, setNormalAngle] = useState<number>(-90);
+  const [P1, setP1] = useState<[number, number]>(edit?.P1 || [0, 0]);
+  const [P3, setP3] = useState<[number, number]>(edit?.P3 || [0, 0]);
+  const [normal, setNormal] = useState<[number, number]>(
+    edit?.normal || [0, -1]
+  );
+  const [normalAngle, setNormalAngle] = useState<number>(
+    Math.round((180 * Math.atan2(normal[1], normal[0])) / Math.PI)
+  );
 
-  const [psName, setPsName] = useState<string>(segments.at(-1)?.name || "");
+  const [psName, setPsName] = useState<string>(
+    edit?.psName || segments.at(-1)?.name || ""
+  );
 
   useEffect(() => {
-    dispatch(clearToolCoords());
-    setType(active_tool[0].toUpperCase() + active_tool.slice(1));
+    if (!edit) {
+      dispatch(clearToolCoords());
+      setType(active_tool[0].toUpperCase() + active_tool.slice(1));
+    }
   }, [active_tool]);
 
   useEffect(() => {
-    if (tool_coords.length === 1) {
-      setP1(tool_coords[0]);
-    } else if (tool_coords.length === 2) {
-      setP3(tool_coords[1]);
-    } else {
-      setP1([0, 0]);
-      setP3([0, 0]);
+    if (!edit) {
+      if (tool_coords.length === 1) {
+        setP1(tool_coords[0]);
+      } else if (tool_coords.length === 2) {
+        setP3(tool_coords[1]);
+      } else {
+        setP1([0, 0]);
+        setP3([0, 0]);
+      }
     }
   }, [tool_coords]);
 
   useEffect(() => {
-    if (tool_coords.length === 1 && loadTypes.indexOf(type) <= 3) {
-      handleAddLoad();
-      dispatch(clearToolCoords());
-    }
-    if (tool_coords.length === 2 && loadTypes.indexOf(type) > 3) {
-      handleAddLoad();
-      dispatch(clearToolCoords());
+    if (!edit) {
+      if (tool_coords.length === 1 && loadTypes.indexOf(type) <= 3) {
+        handleAddLoad();
+        dispatch(clearToolCoords());
+      }
+      if (tool_coords.length === 2 && loadTypes.indexOf(type) > 3) {
+        handleAddLoad();
+        dispatch(clearToolCoords());
+      }
     }
   }, [P1, P3]);
 
@@ -71,13 +90,15 @@ export default function AddLoadForm() {
     const isNameTaken = loads.find((item) => item.name === name);
 
     const newName = `load#${loads.length + (isNameTaken ? 1 : 2)}`;
-    setName(newName);
+    if (!edit) {
+      setName(newName);
+    }
 
     const parentSegment = segments.find((segment) => segment.name === psName);
     if (parentSegment) {
       const degree = loadTypes.indexOf(type) - 4;
       const newLoad: ILoad = {
-        name: isNameTaken ? newName : name,
+        name: edit ? name : isNameTaken ? newName : name,
         class:
           degree === -4 ? "misfitLoad" : degree === -3 ? "temprLoad" : "load",
         degree,
@@ -89,18 +110,34 @@ export default function AddLoadForm() {
         P3: snapToSegment(parentSegment.P1, parentSegment.P3, P3),
       };
 
-      console.log(newLoad);
-
-      await getLoadPlotData(newLoad, socket_id);
-
-      dispatch(addLoad(newLoad));
-      dispatch(changeAppData({ status: `${name} added to structure!` }));
+      dispatch(deleteLoad(edit?.name || ""));
+      try {
+        await getLoadPlotData(newLoad, socket_id);
+        dispatch(addLoad(newLoad));
+        dispatch(changeAppData({ status: `${name} added to structure!` }));
+        if (edit?.name !== name) {
+          dispatch(deletePlotData(edit?.name || ""));
+        }
+      } catch (error: any) {
+        edit && dispatch(addLoad(edit));
+        dispatch(
+          changeAppData({
+            status: error?.response?.data?.error || error?.message || error,
+          })
+        );
+      }
     }
   };
 
   const handleFormSubmit = (event: any) => {
     event.preventDefault();
     handleAddLoad();
+  };
+
+  const handleDelete = (event: any) => {
+    event.preventDefault();
+    dispatch(deleteLoad(edit?.name || ""));
+    dispatch(deleteLoad(edit?.name || ""));
   };
 
   return (
@@ -246,8 +283,19 @@ export default function AddLoadForm() {
 
         <div className="h-[1px] w-full bg-primary_dark" />
         <button className="bg-secondary text-primary_light rounded px-2 py-1 border hover-border-contrast1">
-          Add Load
+          {edit ? "Edit" : "Add"} Load
         </button>
+        {edit && (
+          <>
+            <div className="h-[1px] w-full bg-primary_dark" />
+            <button
+              className="bg-secondary text-primary_light rounded px-2 py-1 border hover-border-contrast1"
+              onClick={handleDelete}
+            >
+              Delete Load
+            </button>
+          </>
+        )}
       </form>
     </div>
   );

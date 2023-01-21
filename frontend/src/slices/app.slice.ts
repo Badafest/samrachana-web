@@ -7,6 +7,7 @@ interface IAppState {
     status: string;
     layout: "1" | "2H" | "2V" | "3H" | "3V" | "4";
     tool_coords: [number, number][];
+    selected: string;
   };
 }
 
@@ -17,6 +18,7 @@ const initialState: IAppState = {
     status: "everything good :)",
     layout: "1",
     tool_coords: [],
+    selected: "",
   },
 };
 
