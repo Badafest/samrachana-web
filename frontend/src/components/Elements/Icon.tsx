@@ -9,7 +9,7 @@ export default function Icon({ className, onClick, ...rest }: IIconProps) {
   return (
     <div
       className={
-        "flex justify-center items-center rounded w-8 h-8 cursor-pointer select-none " +
+        "text-lg flex justify-center items-center rounded w-8 h-8 cursor-pointer select-none " +
         className
       }
       onClick={onClick}

@@ -1,0 +1,96 @@
+{
+  "simplified": {
+    "segments": [
+      {
+        "name": "segment#1",
+        "class": "segment",
+        "type": "line",
+        "P1": [0, 1, 4],
+        "P3": [0, 5, 4],
+        "P2": [0, 3, 4],
+        "area": 1,
+        "youngsModulus": 1,
+        "shearModulus": 1,
+        "alpha": 1,
+        "density": 1,
+        "shapeFactor": [1, 1],
+        "Iyy": 1,
+        "Izz": 1,
+        "J": 2,
+        "axisVector": [1, 0, 0],
+        "parent": "None"
+      }
+    ],
+    "loads": [
+      {
+        "name": "load#1",
+        "class": "load",
+        "degree": 0,
+        "peak": 1,
+        "normal": [0, 0, -1],
+        "psName": "segment#1",
+        "parentSegment": {
+          "name": "segment#1",
+          "class": "segment",
+          "type": "line",
+          "P1": [0, 1, 4],
+          "P3": [0, 5, 4],
+          "P2": [0, 3, 4],
+          "area": 1,
+          "youngsModulus": 1,
+          "shearModulus": 1,
+          "alpha": 1,
+          "density": 1,
+          "shapeFactor": [1, 1],
+          "Iyy": 1,
+          "Izz": 1,
+          "J": 2,
+          "axisVector": [1, 0, 0],
+          "parent": "None"
+        },
+        "P1": [0, 1, 4],
+        "P3": [0, 5, 4]
+      }
+    ],
+    "supports": [
+      {
+        "name": "support#1",
+        "class": "support",
+        "type": "Hinge",
+        "location": [0, 1, 4],
+        "normal": [0, 0, 1],
+        "settlement": [0, 0, 0, 0, 0, 0]
+      },
+      {
+        "name": "support#2",
+        "class": "support",
+        "type": "Roller",
+        "location": [0, 5, 4],
+        "normal": [0, 0, 1],
+        "settlement": [0, 0, 0, 0, 0, 0]
+      }
+    ]
+  },
+  "responseRaw": [
+    [0, 1, 4, 0, 0, 0, -2.66666667, 0, 0],
+    [0, 5, 4, 0, 0, 0, 2.66666667, 0, 0]
+  ],
+  "response": [
+    [1, 4, 0, 0, -2.66666667],
+    [5, 4, 0, 0, 2.66666667]
+  ],
+  "actionRaw": [
+    [0.0, 1.0, 4.0, 0.0, 2.0, 0.0, 0.0, 0.0, -2.22044605e-16],
+    [0.0, 5.0, 4.0, -0.0, -2.0, 0.0, 0.0, 0.0, 2.22044605e-16]
+  ],
+  "action": [
+    [1.0, 4.0, 0.0, 2.0, -2.22044605e-16],
+    [5.0, 4.0, -0.0, -2.0, 2.22044605e-16]
+  ],
+  "memLoc": [[0, 1]],
+  "reactions": [
+    [1.0, 4.0, 0.0, 2.0, -2.22044605e-16],
+    [5.0, 4.0, 0.0, 2.0, -2.22044605e-16]
+  ],
+  "time": 0.00299835205078125
+}

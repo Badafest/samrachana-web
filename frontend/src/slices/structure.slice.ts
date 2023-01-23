@@ -46,16 +46,46 @@ export interface ISupport {
   settlement: [number, number, number];
 }
 
+export interface IAnalysisData {
+  simplified: object;
+  memLoc: [number, number][];
+  actionRaw: number[][];
+  action: number[][];
+  responseRaw: number[][];
+  response: number[][];
+  reactions: number[][];
+}
+
 export interface IStructure {
+  options: {
+    shear: boolean;
+    inextensible: boolean;
+    simplify: boolean;
+  };
   members: { segments: ISegment[]; loads: ILoad[]; supports: ISupport[] };
   data: {
     plot: {
       [name: string]: [number, number][];
     };
+    analysis: {
+      nodes: [number, number][];
+      options: {
+        type: "frame" | "truss";
+        inextensible: boolean;
+        simplify: boolean;
+        accuracy: number;
+      };
+      data: IAnalysisData;
+    };
   };
 }
 
 const initialState: IStructure = {
+  options: {
+    shear: false,
+    inextensible: true,
+    simplify: true,
+  },
   members: {
     segments: [],
     loads: [],
@@ -63,6 +93,24 @@ const initialState: IStructure = {
   },
   data: {
     plot: {},
+    analysis: {
+      options: {
+        type: "frame",
+        inextensible: true,
+        simplify: true,
+        accuracy: 0.995,
+      },
+      nodes: [],
+      data: {
+        simplified: {},
+        memLoc: [],
+        actionRaw: [],
+        action: [],
+        response: [],
+        responseRaw: [],
+        reactions: [],
+      },
+    },
   },
 };
 
@@ -125,6 +173,25 @@ export const structureSlice = createSlice({
         delete state.data.plot[payload];
       }
     },
+    analysisOptions: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        type: "frame" | "truss";
+        inextensible: boolean;
+        simplify: boolean;
+        accuracy: number;
+      }>
+    ) => {
+      state.data.analysis.options = { ...payload };
+    },
+    analysisData: (state, { payload }: PayloadAction<IAnalysisData>) => {
+      state.data.analysis.data = { ...payload };
+      state.data.analysis.nodes = payload.reactions.map((rxn) =>
+        rxn.slice(0, 2)
+      ) as [number, number][];
+    },
   },
 });
 
@@ -137,4 +204,6 @@ export const {
   deleteSegment,
   addPlotData,
   deletePlotData,
+  analysisOptions,
+  analysisData,
 } = structureSlice.actions;

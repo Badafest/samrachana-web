@@ -13,6 +13,15 @@
   src: url("opensans-italic.ttf");
 }
 
+@font-face {
+  font-family: SamrachanaIcon;
+  src: url("samrachana.ttf");
+}
+
+.icon {
+  font-family: SamrachanaIcon;
+}
+
 * {
   margin: 0;
   padding: 0;

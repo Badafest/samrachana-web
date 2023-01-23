@@ -21,7 +21,7 @@ function ToolIcon({ tool, icon }: { tool: string; icon: string }) {
   const dispatch = useAppDispatch();
   return (
     <Icon
-      className={`bg-primary_light text-contrast1 cursor-pointer border active-bg-primary_dark ${
+      className={`bg-primary_light text-secondary cursor-pointer border active-bg-primary_dark ${
         active_tool === tool ? "border-secondary" : "border-primary_dark"
       }`}
       onClick={() => {
@@ -29,7 +29,7 @@ function ToolIcon({ tool, icon }: { tool: string; icon: string }) {
         dispatch(changeAppData({ active_tool: tool }));
       }}
     >
-      {icon}
+      <span className="icon">{icon}</span>
     </Icon>
   );
 }

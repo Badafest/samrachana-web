@@ -41,6 +41,9 @@ function App() {
 
   useEffect(() => {
     socket?.addEventListener("message", socketMessageHandler);
+    return () => {
+      socket?.removeEventListener("message", socketMessageHandler);
+    };
   }, [socket]);
 
   return (

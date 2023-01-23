@@ -8,5 +8,14 @@
   "n": "node",
   "c": "custom",
   "r": "roller",
+  "p": "point",
+  "u": "uniform",
+  "m": "moment",
+  "v": "linear",
+  "w": "parabolic",
+  "z": "cubic",
+  "t": "temperature",
+  "s": "misfit",
+  " ": "analyse",
   "x": "select"
 }

@@ -1,5 +1,5 @@
 from lib import _app2d
-from json import loads
+from json import loads, dump
 import sys
 from numpy import array
 
@@ -61,6 +61,24 @@ def main():
                                                      float(param["scale"]))
         stdOutArray(output)
 
+    elif func == "frame":
+        structure = _app2d["_format"]["_structify"](param["elements"])
+
+        output = _app2d["_structure"]["_frame"](structure, param["shear"],
+                                                param["inextensible"],
+                                                param["simplify"],
+                                                float(param["accuracy"]))
+        stdOut(output)
+
+    elif func == "truss":
+        structure = _app2d["_format"]["_structify"](param["elements"])
+
+        output = _app2d["_structure"]["_truss"](structure, param["shear"],
+                                                param["inextensible"],
+                                                param["simplify"],
+                                                float(param["accuracy"]))
+        stdOut(output)
+
     elif func == "snap-seg":
         segment = param["segment"]
         segment["P1"] = vectorize(segment["P1"])
@@ -68,6 +86,9 @@ def main():
         segment["P2"] = vectorize(segment["P2"])
         output = _app2d["_segments"]["_snap"](segment,
                                               vectorize(param["point"]))
+        stdOut(dump(output))
+
+    else:
         stdOut(output)
 
     sys.stdout.flush()

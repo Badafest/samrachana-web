@@ -4,6 +4,7 @@ import tools from "../data/tools.json";
 import SupportForm from "./forms/SupportForm";
 import LoadForm from "./forms/LoadForm";
 import EditDeleteForm from "./forms/EditDeleteForm";
+import AnalyseForm from "./forms/AnalyseForm";
 
 export default function RightSideBar() {
   const { active_tool } = useAppSelector((state) => state.app.data);
@@ -39,6 +40,8 @@ function ToolForm({ active_tool }: { active_tool: string }) {
     return <LoadForm />;
   } else if (active_tool === "select") {
     return <EditDeleteForm />;
+  } else if (active_tool === "analyse") {
+    return <AnalyseForm />;
   }
   {
     return <></>;

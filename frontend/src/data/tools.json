@@ -2,91 +2,96 @@
   {
     "name": "select",
     "hint": "Select members to edit or delete them",
-    "icon_name": "select_tool"
+    "icon_name": "\ue917"
   },
   {
     "name": "line",
     "hint": "Add a linear segment to structure",
-    "icon_name": "line_tool"
+    "icon_name": "\ue90b"
   },
   {
     "name": "arc",
     "hint": "Add a circular segment (arc) to structure",
-    "icon_name": "arc_tool"
+    "icon_name": "\ue901"
   },
   {
     "name": "quad",
     "hint": "Add a parabolic segment (arch) to structure",
-    "icon_name": "quad_tool"
+    "icon_name": "\ue913"
   },
   {
     "name": "fixed",
     "hint": "Add a fixed suppport to structure",
-    "icon_name": "fixed_tool"
+    "icon_name": "\ue905"
   },
   {
     "name": "hinge",
     "hint": "Add a hinged suppport to structure",
-    "icon_name": "hinge_tool"
+    "icon_name": "\ue907"
   },
   {
     "name": "roller",
     "hint": "Add a roller suppport to structure",
-    "icon_name": "roller_tool"
+    "icon_name": "\ue915"
   },
   {
     "name": "internal_hinge",
     "hint": "Add an internal hinge to structure",
-    "icon_name": "internal_hinge_tool"
+    "icon_name": "\ue908"
   },
   {
     "name": "node",
     "hint": "Add a node to structure",
-    "icon_name": "node_tool"
+    "icon_name": "\ue90f"
   },
   {
     "name": "custom",
     "hint": "Add a custom suppport to structure",
-    "icon_name": "custom_tool"
+    "icon_name": "\ue903"
   },
   {
     "name": "moment",
     "hint": "Add a moment load to a segment of structure",
-    "icon_name": "moment_tool"
+    "icon_name": "\ue90e"
   },
   {
     "name": "point",
     "hint": "Add a point load to a segment of structure",
-    "icon_name": "point_tool"
+    "icon_name": "\ue912"
   },
   {
     "name": "uniform",
     "hint": "Add a uniformly distributed load to a segment of structure",
-    "icon_name": "udl_tool"
+    "icon_name": "\ue91f"
   },
   {
     "name": "linear",
     "hint": "Add a uniformly varying load to a segment of structure",
-    "icon_name": "uvl_tool"
+    "icon_name": "\ue90c"
   },
   {
     "name": "quadratic",
     "hint": "Add a quadratic distributed load to a segment of structure",
-    "icon_name": "poly_quad_tool"
+    "icon_name": "\ue914"
   },
   {
     "name": "cubic",
     "hint": "Add a cubic distributed load to a segment of structure",
-    "icon_name": "poly_cubic_tool"
+    "icon_name": "\ue902"
   },
   {
     "name": "misfit",
     "hint": "Add a misfit load to a segment of structure",
-    "icon_name": "misfit_tool"
+    "icon_name": "\ue90d"
   },
   {
     "name": "temperature",
     "hint": "Add a temperature load to a segment of structure",
-    "icon_name": "tempr_tool"
+    "icon_name": "\ue919"
+  },
+  {
+    "name": "analyse",
+    "hint": "Solve for node actions and responses",
+    "icon_name": "\ue900"
   }
 ]

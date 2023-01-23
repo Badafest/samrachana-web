@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { changeAppData, updateToolCoords } from "../../slices/app.slice";
 import { useAppSelector } from "../../store";
-import drawPath from "../../utils/drawPath";
+import drawPath, { drawText } from "../../utils/drawing";
 import getBoundingPoints, {
   isPointBounded,
 } from "../../utils/getBoundingPoints";
@@ -30,6 +30,8 @@ export default function MainGraph() {
   );
 
   const { tool_coords } = useAppSelector((state) => state.app.data);
+
+  const { nodes } = useAppSelector((state) => state.structure.data.analysis);
 
   const updateFunction = (
     context: CanvasRenderingContext2D | null,
@@ -67,6 +69,18 @@ export default function MainGraph() {
             support_plot_width
           );
       });
+      nodes.length &&
+        nodes.forEach((node, index) => {
+          drawText(
+            context,
+            `${index}`,
+            node,
+            origin,
+            zoom,
+            support_plot_color,
+            12
+          );
+        });
     }
   };
 

@@ -423,6 +423,7 @@ def convertTo3D(Dictionary2d):
         dictionary['J'] = 2 * dictionary['I']
         dictionary['axisVector'] = array([1.0, 0.0, 0.0])
         dictionary['shapeFactor'] = array([dictionary['shapeFactor']] * 2)
+        dictionary["parent"] = None
         dictionary.pop('I')
     elif cl in ['load', 'temprLoad', 'misfitLoad']:
         dictionary['parentSegment'] = convertTo3D(dictionary['parentSegment'])

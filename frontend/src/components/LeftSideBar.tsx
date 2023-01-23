@@ -5,12 +5,12 @@ import Icon from "./Elements/Icon";
 export default function LeftSideBar() {
   return (
     <div className="min-w-max px-2 bg-primary_dark flex flex-col gap-1 p-1">
-      <SetViewIcon choose="1" icon="1" />
-      <SetViewIcon choose="2H" icon="2H" />
-      <SetViewIcon choose="2V" icon="2V" />
-      <SetViewIcon choose="3H" icon="3H" />
-      <SetViewIcon choose="3V" icon="3V" />
-      <SetViewIcon choose="4" icon="4" />
+      <SetViewIcon choose="1" icon="&#xe910;" />
+      <SetViewIcon choose="2H" icon="&#xe91d;" />
+      <SetViewIcon choose="2V" icon="&#xe91e;" />
+      <SetViewIcon choose="3H" icon="&#xe91a;" />
+      <SetViewIcon choose="3V" icon="&#xe91b;" />
+      <SetViewIcon choose="4" icon="&#xe906;" />
     </div>
   );
 }
@@ -26,12 +26,12 @@ function SetViewIcon({
   const { layout } = useAppSelector((state) => state.app.data);
   return (
     <Icon
-      className={`bg-primary_light border ${
+      className={`bg-primary_light border text-secondary ${
         layout === choose ? "border-secondary" : ""
       }`}
       onClick={() => dispatch(changeAppData({ layout: choose }))}
     >
-      {icon}
+      <span className="icon">{icon}</span>
     </Icon>
   );
 }

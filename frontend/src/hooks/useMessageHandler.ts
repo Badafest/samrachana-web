@@ -1,6 +1,7 @@
+import { parseAnalysedData } from "../controller/analyse.controller.";
 import { parseNumpyArray } from "../controller/plot.controller";
 import { changeAppData } from "../slices/app.slice";
-import { addPlotData } from "../slices/structure.slice";
+import { addPlotData, analysisData } from "../slices/structure.slice";
 import { useAppDispatch } from "../store";
 
 export default function useMessageHandler() {
@@ -12,10 +13,12 @@ export default function useMessageHandler() {
       return dispatch(
         changeAppData({ status: "socket connected successfully" })
       );
-    }
-    if (["plot-seg", "plot-sup", "plot-lod"].includes(func)) {
+    } else if (["plot-seg", "plot-sup", "plot-lod"].includes(func)) {
       const points = parseNumpyArray(data);
       return dispatch(addPlotData({ name: param.name, data: points }));
+    } else if (["frame", "truss"].includes(func)) {
+      const parsed = parseAnalysedData(data);
+      return dispatch(analysisData(JSON.parse(parsed)));
     }
   }
   return socketMessageHandler;

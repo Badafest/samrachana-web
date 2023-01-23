@@ -142,8 +142,9 @@ def internalHingePlotData2(location, scale=1):
 
 def customPlotData2(location, scale=1, types='010'):
     if types == '000' or types == 'Node':
-        return vstack((location - 5, location + 5, location,
-                       location + array([-5, 5]), location + array([5, -5])))
+        return vstack(
+            (location - 0.1, location + 0.1, location,
+             location + array([-0.1, 0.1]), location + array([0.1, -0.1])))
     types = array(list(types)).astype(int)
     fd = fixedPlotData2(location, scale)
     xArrow = vstack((fd[0:5], fd[10:15])) if types[0] else location

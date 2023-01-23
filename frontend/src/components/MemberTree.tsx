@@ -57,14 +57,14 @@ function SegmentTable({ segment }: { segment: ISegment }) {
       <summary className="flex items-center justify-between">
         {segment.name}{" "}
         <Icon
-          className="border border-secondary rounded"
+          className="border border-secondary rounded text-secondary"
           onClick={() => {
             dispatch(
               changeAppData({ active_tool: "select", selected: segment.name })
             );
           }}
         >
-          edit_delete_tool
+          <span className="icon">&#xe904;</span>
         </Icon>
       </summary>
       <div className="grid grid-cols-4 px-4 py-1">
@@ -116,14 +116,14 @@ function LoadTable({ load }: { load: ILoad }) {
       <summary className="flex justify-between items-center">
         {load.name}
         <Icon
-          className="border border-secondary rounded"
+          className="border border-secondary rounded text-secondary"
           onClick={() => {
             dispatch(
               changeAppData({ active_tool: "select", selected: load.name })
             );
           }}
         >
-          edit_delete_tool
+          <span className="icon">&#xe904;</span>
         </Icon>
       </summary>
       <div className="grid grid-cols-4 px-4 py-1">
@@ -165,14 +165,14 @@ function SupportTable({ support }: { support: ISupport }) {
       <summary className="flex items-center justify-between">
         {support.name}
         <Icon
-          className="border border-secondary rounded"
+          className="border border-secondary rounded text-secondary"
           onClick={() => {
             dispatch(
               changeAppData({ active_tool: "select", selected: support.name })
             );
           }}
         >
-          edit_delete_tool
+          <span className="icon">&#xe904;</span>
         </Icon>
       </summary>
       <div className="grid grid-cols-4 px-4 py-1">
