@@ -127,7 +127,7 @@ export default function SegmentForm({ edit }: { edit?: ISegment }) {
       edit && dispatch(addSegment(edit));
       dispatch(
         changeAppData({
-          status: error?.response?.data?.error || error?.message || error,
+          status: error.message || error,
         })
       );
     }

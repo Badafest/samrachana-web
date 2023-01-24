@@ -1,9 +1,9 @@
-import axios from "axios";
 import { FormEventHandler, useRef } from "react";
 import {
   getFrameAnalysedData,
   getTrussAnalysedData,
 } from "../../controller/analyse.controller.";
+import { changeAppData } from "../../slices/app.slice";
 import { analysisOptions } from "../../slices/structure.slice";
 import { useAppDispatch, useAppSelector } from "../../store";
 
@@ -34,23 +34,32 @@ export default function AnalyseForm() {
 
       dispatch(analysisOptions(newOptions));
       const elements = [...segments, ...loads, ...supports];
-      newOptions.type === "frame"
-        ? await getFrameAnalysedData(
-            elements,
-            false,
-            newOptions.inextensible,
-            newOptions.simplify,
-            newOptions.accuracy,
-            socket_id
-          )
-        : await getTrussAnalysedData(
-            elements,
-            newOptions.simplify,
-            newOptions.accuracy,
-            false,
-            false,
-            socket_id
-          );
+      try {
+        newOptions.type === "frame"
+          ? await getFrameAnalysedData(
+              elements,
+              false,
+              newOptions.inextensible,
+              newOptions.simplify,
+              newOptions.accuracy,
+              socket_id
+            )
+          : await getTrussAnalysedData(
+              elements,
+              newOptions.simplify,
+              newOptions.accuracy,
+              false,
+              false,
+              socket_id
+            );
+        dispatch(changeAppData({ layout: "2V" }));
+      } catch (error: any) {
+        dispatch(
+          changeAppData({
+            status: error.message || error,
+          })
+        );
+      }
     }
   };
 

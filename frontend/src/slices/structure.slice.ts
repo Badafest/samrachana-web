@@ -56,6 +56,18 @@ export interface IAnalysisData {
   reactions: number[][];
 }
 
+export interface IDiagramsData {
+  segments: string[];
+  axialForce?: number[][][];
+  shearForce?: number[][][];
+  force?: number[][][];
+  moment?: number[][][];
+  axialDisplacement?: number[][][];
+  shearDisplacement?: number[][][];
+  displacement?: number[][][];
+  slope?: number[][][];
+}
+
 export interface IStructure {
   options: {
     shear: boolean;
@@ -77,6 +89,7 @@ export interface IStructure {
       };
       data: IAnalysisData;
     };
+    diagrams: IDiagramsData;
   };
 }
 
@@ -110,6 +123,17 @@ const initialState: IStructure = {
         responseRaw: [],
         reactions: [],
       },
+    },
+    diagrams: {
+      segments: [],
+      axialForce: [],
+      shearForce: [],
+      force: [],
+      moment: [],
+      axialDisplacement: [],
+      shearDisplacement: [],
+      displacement: [],
+      slope: [],
     },
   },
 };
@@ -189,8 +213,13 @@ export const structureSlice = createSlice({
     analysisData: (state, { payload }: PayloadAction<IAnalysisData>) => {
       state.data.analysis.data = { ...payload };
       state.data.analysis.nodes = payload.reactions.map((rxn) =>
-        rxn.slice(0, 2)
+        state.data.analysis.options.type === "frame"
+          ? rxn.slice(0, 2)
+          : rxn.slice(1, 3)
       ) as [number, number][];
+    },
+    diagramsData: (state, { payload }: PayloadAction<IDiagramsData>) => {
+      state.data.diagrams = { ...state.data.diagrams, ...payload };
     },
   },
 });
@@ -206,4 +235,5 @@ export const {
   deletePlotData,
   analysisOptions,
   analysisData,
+  diagramsData,
 } = structureSlice.actions;

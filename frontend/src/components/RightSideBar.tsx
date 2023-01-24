@@ -5,6 +5,7 @@ import SupportForm from "./forms/SupportForm";
 import LoadForm from "./forms/LoadForm";
 import EditDeleteForm from "./forms/EditDeleteForm";
 import AnalyseForm from "./forms/AnalyseForm";
+import VectorDiagramForm from "./forms/VectorDiagramForm";
 
 export default function RightSideBar() {
   const { active_tool } = useAppSelector((state) => state.app.data);
@@ -42,6 +43,8 @@ function ToolForm({ active_tool }: { active_tool: string }) {
     return <EditDeleteForm />;
   } else if (active_tool === "analyse") {
     return <AnalyseForm />;
+  } else if (active_tool === "vector") {
+    return <VectorDiagramForm />;
   }
   {
     return <></>;

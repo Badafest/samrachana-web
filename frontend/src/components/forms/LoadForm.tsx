@@ -122,7 +122,7 @@ export default function LoadForm({ edit }: { edit?: ILoad }) {
         edit && dispatch(addLoad(edit));
         dispatch(
           changeAppData({
-            status: error?.response?.data?.error || error?.message || error,
+            status: error.message || error,
           })
         );
       }

@@ -16,6 +16,7 @@ async function Controller(req: Request, res: Response) {
     const sendData = async (data: any) => {
       ls.stdout.removeAllListeners();
       ls.stderr.removeAllListeners();
+      // console.log(data.toString());
       const client = await socketService.getClient(user_id);
       if (client && client.socket) {
         client.socket.send(
@@ -36,6 +37,7 @@ async function Controller(req: Request, res: Response) {
     const sendError = (data: any) => {
       ls.stderr.removeAllListeners();
       ls.stderr.removeAllListeners();
+      console.log(data.toString());
       return res.status(400).json({
         message: "Script run with error",
         call: { func, param },

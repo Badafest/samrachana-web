@@ -1,11 +1,14 @@
 import { useState } from "react";
-import AnalysisTable from "../AnalysisTable";
+import FrameAnalysisTable from "../tables/FrameAnalysisTable";
 import ViewTopBar from "../Elements/ViewTopBar";
+import { useAppSelector } from "../../store";
+import TrussAnalysisTable from "../tables/TrussAnalysisTable";
 
 export default function TableView() {
   const [current, setCurrent] = useState<"reactions" | "action" | "response">(
     "reactions"
   );
+  const { options } = useAppSelector((state) => state.structure.data.analysis);
   return (
     <>
       <ViewTopBar>
@@ -38,7 +41,11 @@ export default function TableView() {
           </span>
         </div>
       </ViewTopBar>
-      <AnalysisTable current={current} />
+      {options.type === "frame" ? (
+        <FrameAnalysisTable current={current} />
+      ) : (
+        <TrussAnalysisTable current={current} />
+      )}
     </>
   );
 }

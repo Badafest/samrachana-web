@@ -3,6 +3,10 @@ from json import loads, dump
 import sys
 from numpy import array
 
+import warnings
+
+warnings.filterwarnings("ignore")
+
 
 def vectorize(vector):
     return array(vector, "float")
@@ -14,6 +18,13 @@ def stdOutArray(output):
 
 def stdOut(output):
     sys.stdout.write(str(output))
+
+
+def convertListsToArray(dict):
+    return {
+        key: (array(value) if type(value) == type([]) else value)
+        for (key, value) in dict.items()
+    }
 
 
 def main():
@@ -79,6 +90,79 @@ def main():
                                                 float(param["accuracy"]))
         stdOut(output)
 
+    elif func == "vec-diag":
+        data = convertListsToArray(param["data"])
+
+        data["simplified"]["segments"] = array([
+            convertListsToArray(segment)
+            for segment in data["simplified"]["segments"]
+        ])
+
+        for segment in data["simplified"]["segments"]:
+            segment["parent"] = None if segment[
+                "parent"] == "None" else convertListsToArray(segment["parent"])
+            if (segment["parent"] != None):
+                segment["parent"]["parent"] = None
+
+        data["simplified"]["loads"] = array([
+            convertListsToArray(load) for load in data["simplified"]["loads"]
+        ])
+
+        for load in data["simplified"]["loads"]:
+            load["parentSegment"] = convertListsToArray(load["parentSegment"])
+            load["parentSegment"]["parent"] = None if load["parentSegment"][
+                "parent"] == "None" else convertListsToArray(
+                    load["parentSegment"]["parent"])
+
+        data["simplified"]["supports"] = array([
+            convertListsToArray(support)
+            for support in data["simplified"]["supports"]
+        ])
+
+        segments = _app2d["_format"]["_structify"](
+            param["segments"])["segments"]
+
+        structure = "_frame" if param["structure"] == "frame" else "_truss"
+
+        output = {}
+
+        plotTypes = {
+            "_force_comp.x": "axialForce",
+            "_force_comp.y": "shearForce",
+            "_force_comp": "force",
+            "_moment": "moment",
+            "_delta_comp.x": "axialDisplacement",
+            "_delta_comp.y": "shearDisplacement",
+            "_delta_comp": "displacement",
+            "_slope": "slope"
+        }
+
+        for plot in param["plots"]:
+
+            splitted = plot.split(".")
+            main = splitted[0]
+            component = splitted[1] if len(splitted) == 2 else None
+
+            lineDataType = "_action" if main == "_force_comp" or main == "_moment" else "_response"
+
+            default = [
+                _app2d["_simulation"][structure][lineDataType][main](segment,
+                                                                     data,
+                                                                     component,
+                                                                     scale=1)
+                for segment in segments
+            ]
+
+            _, plotData = _app2d["_simulation"]["_utils"]["_rescale"](
+                segments,
+                default,
+                maxPlot=param["maxPlot"],
+                precision=param["precision"])
+
+            output[plotTypes[plot]] = plotData.tolist()
+
+        stdOut(output)
+
     elif func == "snap-seg":
         segment = param["segment"]
         segment["P1"] = vectorize(segment["P1"])
@@ -86,12 +170,10 @@ def main():
         segment["P2"] = vectorize(segment["P2"])
         output = _app2d["_segments"]["_snap"](segment,
                                               vectorize(param["point"]))
-        stdOut(dump(output))
-
-    else:
         stdOut(output)
 
-    sys.stdout.flush()
+    else:
+        stdOutArray(output)
 
 
 main()

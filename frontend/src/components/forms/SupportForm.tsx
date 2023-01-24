@@ -137,7 +137,7 @@ export default function SupportForm({ edit }: { edit?: ISupport }) {
       edit && dispatch(addSupport(edit));
       dispatch(
         changeAppData({
-          status: error?.response?.data?.error || error?.message || error,
+          status: error.message || error,
         })
       );
     }

@@ -24,6 +24,14 @@ interface ISettingsState {
     sim_grid_color: string;
     sim_grid_opacity: number;
     sim_grid_dots: boolean;
+    afd_plot_color: string;
+    sfd_plot_color: string;
+    bmd_plot_color: string;
+    rfd_plot_color: string;
+    add_plot_color: string;
+    sdd_plot_color: string;
+    slp_plot_color: string;
+    rdd_plot_color: string;
   };
 }
 
@@ -48,12 +56,20 @@ const initialState: ISettingsState = {
         load_plot_width: 2,
         support_plot_color: "#417c45",
         support_plot_width: 2,
-        line_grid_color: "#000000",
-        line_grid_opacity: 0.5,
-        line_grid_dots: false,
         sim_grid_color: "#000000",
         sim_grid_opacity: 0.5,
         sim_grid_dots: false,
+        afd_plot_color: "#d53459",
+        sfd_plot_color: "#d53459",
+        bmd_plot_color: "#d53459",
+        rfd_plot_color: "#d53459",
+        add_plot_color: "#d53459",
+        sdd_plot_color: "#d53459",
+        slp_plot_color: "#d53459",
+        rdd_plot_color: "#d53459",
+        line_grid_color: "#000000",
+        line_grid_opacity: 0.5,
+        line_grid_dots: false,
       },
 };
 

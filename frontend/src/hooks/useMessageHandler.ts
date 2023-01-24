@@ -1,7 +1,12 @@
 import { parseAnalysedData } from "../controller/analyse.controller.";
 import { parseNumpyArray } from "../controller/plot.controller";
 import { changeAppData } from "../slices/app.slice";
-import { addPlotData, analysisData } from "../slices/structure.slice";
+import {
+  addPlotData,
+  analysisData,
+  diagramsData,
+  ISegment,
+} from "../slices/structure.slice";
 import { useAppDispatch } from "../store";
 
 export default function useMessageHandler() {
@@ -19,6 +24,15 @@ export default function useMessageHandler() {
     } else if (["frame", "truss"].includes(func)) {
       const parsed = parseAnalysedData(data);
       return dispatch(analysisData(JSON.parse(parsed)));
+    } else if (func === "vec-diag") {
+      const diagramData = JSON.parse(parseAnalysedData(data));
+      const segments = param["segments"].map((x: ISegment) => x.name);
+      return dispatch(
+        diagramsData({
+          segments,
+          ...diagramData,
+        })
+      );
     }
   }
   return socketMessageHandler;

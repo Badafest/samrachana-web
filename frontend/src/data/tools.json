@@ -93,5 +93,10 @@
     "name": "analyse",
     "hint": "Solve for node actions and responses",
     "icon_name": "\ue900"
+  },
+  {
+    "name": "vector",
+    "hint": "Show actions and responses in vector diagrams",
+    "icon_name": "\ue920"
   }
 ]
