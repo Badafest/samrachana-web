@@ -309,7 +309,9 @@ def breakSegment(seg, points, loads=array([])):
 def childOf(seg, simFrame):
     segments = simFrame['segments']
     return segments[array([
-        identicalObjects(seg, x['parent'] if x['parent'] != None else x)
+        identicalObjects(
+            seg, x['parent'] if
+            (x['parent'] != None or x['parent'] != "None") else x)
         for x in segments
     ]).nonzero()[0]]
 

@@ -22,7 +22,7 @@ def stdOut(output):
 
 def convertListsToArray(dict):
     return {
-        key: (array(value) if type(value) == type([]) else value)
+        key: (vectorize(value) if type(value) == type([]) else value)
         for (key, value) in dict.items()
     }
 
@@ -93,16 +93,16 @@ def main():
     elif func == "vec-diag":
         data = convertListsToArray(param["data"])
 
+        data["memLoc"] = data["memLoc"].astype(int)
+
         data["simplified"]["segments"] = array([
             convertListsToArray(segment)
             for segment in data["simplified"]["segments"]
         ])
 
         for segment in data["simplified"]["segments"]:
-            segment["parent"] = None if segment[
-                "parent"] == "None" else convertListsToArray(segment["parent"])
-            if (segment["parent"] != None):
-                segment["parent"]["parent"] = None
+            if segment["parent"] != "None":
+                segment["parent"] = convertListsToArray(segment["parent"])
 
         data["simplified"]["loads"] = array([
             convertListsToArray(load) for load in data["simplified"]["loads"]
@@ -110,8 +110,8 @@ def main():
 
         for load in data["simplified"]["loads"]:
             load["parentSegment"] = convertListsToArray(load["parentSegment"])
-            load["parentSegment"]["parent"] = None if load["parentSegment"][
-                "parent"] == "None" else convertListsToArray(
+            if load["parentSegment"]["parent"] != "None":
+                load["parentSegment"]["parent"] = convertListsToArray(
                     load["parentSegment"]["parent"])
 
         data["simplified"]["supports"] = array([
@@ -121,6 +121,9 @@ def main():
 
         segments = _app2d["_format"]["_structify"](
             param["segments"])["segments"]
+
+        for segment in segments:
+            segment["parent"] = "None"
 
         structure = "_frame" if param["structure"] == "frame" else "_truss"
 
