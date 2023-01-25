@@ -120,7 +120,7 @@ export default function AnalyseForm() {
             defaultChecked={options.simplify}
           />
           <label htmlFor="simplify" className="cursor-pointer">
-            Simplify
+            simplify
           </label>
         </div>
         <label htmlFor="accuracy" className="cursor-pointer">

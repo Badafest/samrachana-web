@@ -18,12 +18,12 @@ interface ISettingsState {
     load_plot_width: number;
     support_plot_color: string;
     support_plot_width: number;
-    line_grid_color: string;
-    line_grid_opacity: number;
-    line_grid_dots: boolean;
-    sim_grid_color: string;
-    sim_grid_opacity: number;
-    sim_grid_dots: boolean;
+    anim_grid_color: string;
+    anim_grid_opacity: number;
+    anim_grid_dots: boolean;
+    vec_grid_color: string;
+    vec_grid_opacity: number;
+    vec_grid_dots: boolean;
     afd_plot_color: string;
     sfd_plot_color: string;
     bmd_plot_color: string;
@@ -32,6 +32,7 @@ interface ISettingsState {
     sdd_plot_color: string;
     slp_plot_color: string;
     rdd_plot_color: string;
+    [key: string]: any;
   };
 }
 
@@ -56,9 +57,9 @@ const initialState: ISettingsState = {
         load_plot_width: 2,
         support_plot_color: "#417c45",
         support_plot_width: 2,
-        sim_grid_color: "#000000",
-        sim_grid_opacity: 0.5,
-        sim_grid_dots: false,
+        vec_grid_color: "#000000",
+        vec_grid_opacity: 0.5,
+        vec_grid_dots: false,
         afd_plot_color: "#c521bb",
         sfd_plot_color: "#229959",
         bmd_plot_color: "#d53459",
@@ -67,9 +68,9 @@ const initialState: ISettingsState = {
         sdd_plot_color: "#229959",
         slp_plot_color: "#d53459",
         rdd_plot_color: "#23321f",
-        line_grid_color: "#000000",
-        line_grid_opacity: 0.5,
-        line_grid_dots: false,
+        anim_grid_color: "#000000",
+        anim_grid_opacity: 0.5,
+        anim_grid_dots: false,
       },
 };
 

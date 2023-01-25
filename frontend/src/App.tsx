@@ -74,8 +74,8 @@ function DefaultTableView() {
   return <EditableView default="table" />;
 }
 
-function DefaultSimView() {
-  return <EditableView default="sim" />;
+function DefaultvecView() {
+  return <EditableView default="vec" />;
 }
 
 function MultiViews() {
@@ -94,7 +94,7 @@ function MultiViews() {
     case "3H":
       return (
         <ThreeViewsHz
-          ViewLeft={DefaultSimView}
+          ViewLeft={DefaultvecView}
           ViewRightTop={DefaultMainView}
           ViewRightBottom={DefaultTableView}
         />
@@ -103,7 +103,7 @@ function MultiViews() {
       return (
         <ThreeViewsVt
           ViewTop={DefaultMainView}
-          ViewBottomLeft={DefaultSimView}
+          ViewBottomLeft={DefaultvecView}
           ViewBottomRight={DefaultTableView}
         />
       );
@@ -111,7 +111,7 @@ function MultiViews() {
       return (
         <FourViews
           ViewTopLeft={DefaultMainView}
-          ViewTopRight={DefaultSimView}
+          ViewTopRight={DefaultvecView}
           ViewBottomLeft={DefaultTreeView}
           ViewBottomRight={DefaultTableView}
         />

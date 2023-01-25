@@ -1,11 +1,11 @@
 import { useState } from "react";
-import LineView from "../LineView";
+import AnimView from "../AnimView";
 import MainView from "../MainView";
-import SimView from "../SimView";
+import VecView from "../VecView";
 import TableView from "../TableView";
 import TreeView from "../TreeView";
 
-type TViewOption = "main" | "line" | "sim" | "tree" | "table";
+type TViewOption = "main" | "line" | "vec" | "tree" | "table";
 export default function EditableView(
   props: { default: TViewOption } = { default: "main" }
 ) {
@@ -21,8 +21,8 @@ export default function EditableView(
         <option value="main">Structure</option>
         <option value="tree">Members</option>
         <option value="table">Analysis Result</option>
-        <option value="line">Actions and Responses</option>
-        <option value="sim">Vector Diagrams</option>
+        <option value="vec">Vector Diagrams</option>
+        <option value="line">Animated Diagrams</option>
       </select>
       <ViewRenderer selected={selected} />
     </>
@@ -33,9 +33,9 @@ function ViewRenderer({ selected }: { selected: TViewOption | undefined }) {
   if (selected === "main") {
     return <MainView />;
   } else if (selected === "line") {
-    return <LineView />;
-  } else if (selected === "sim") {
-    return <SimView />;
+    return <AnimView />;
+  } else if (selected === "vec") {
+    return <VecView />;
   } else if (selected === "table") {
     return <TableView />;
   } else if (selected === "tree") {

@@ -1,6 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { changeAppData } from "../slices/app.slice";
-import { ILoad, ISegment, ISupport } from "../slices/structure.slice";
+import {
+  ILoad,
+  ISegment,
+  ISupport,
+  segmentProperty,
+} from "../slices/structure.slice";
 import { useAppDispatch, useAppSelector } from "../store";
 import { getRounded } from "./Elements/Graph/functions";
 import Icon from "./Elements/Icon";
@@ -68,7 +73,7 @@ function SegmentTable({ segment }: { segment: ISegment }) {
         </Icon>
       </summary>
       <div className="grid grid-cols-4 px-4 py-1">
-        <div className="col-span-2">
+        <div className="col-span-2 flex flex-col gap-1">
           <div>Type</div>
           <div>Initial Coordinates</div>
           <div>Final Coordinates</div>
@@ -81,7 +86,7 @@ function SegmentTable({ segment }: { segment: ISegment }) {
           <div>Temperature Coefficient</div>
           <div>Density</div>
         </div>
-        <div className="col-span-2">
+        <div className="col-span-2 flex flex-col gap-1">
           <div>{segment.type}</div>
           <div>
             <span>{getRounded(segment.P1[0], precision)}</span>,{" "}
@@ -95,13 +100,30 @@ function SegmentTable({ segment }: { segment: ISegment }) {
             <span>{getRounded(segment.P2[0], precision)}</span>,{" "}
             <span>{getRounded(segment.P2[1], precision)}</span>
           </div>
-          <div>{getRounded(segment.area, precision)}</div>
-          <div>{getRounded(segment.I, precision)}</div>
-          <div>{getRounded(segment.youngsModulus, precision)}</div>
-          <div>{getRounded(segment.shearModulus, precision)}</div>
-          <div>{getRounded(segment.shapeFactor, precision)}</div>
-          <div>{getRounded(segment.alpha, precision)}</div>
-          <div>{getRounded(segment.density, precision)}</div>
+          {[
+            "area",
+            "I",
+            "youngsModulus",
+            "shearModulus",
+            "shapeFactor",
+            "alpha",
+            "density",
+          ].map((prop, index) => (
+            <input
+              key={index}
+              type="number"
+              className="outline-none px-2 rounded focus:border focus-border-secondary"
+              value={getRounded(segment[prop] as number, precision)}
+              onChange={(e) =>
+                dispatch(
+                  segmentProperty({
+                    name: segment.name,
+                    props: { ...segment, [prop]: e.target.value },
+                  })
+                )
+              }
+            />
+          ))}
         </div>
       </div>
     </details>
@@ -127,7 +149,7 @@ function LoadTable({ load }: { load: ILoad }) {
         </Icon>
       </summary>
       <div className="grid grid-cols-4 px-4 py-1">
-        <div className="col-span-2">
+        <div className="col-span-2 flex flex-col gap-1">
           <div>Type</div>
           <div>Parent Segment</div>
           <div>Peak Value</div>
@@ -135,7 +157,7 @@ function LoadTable({ load }: { load: ILoad }) {
           <div>Final Coordinates</div>
           <div>Normal</div>
         </div>
-        <div className="col-span-2">
+        <div className="col-span-2 flex flex-col gap-1">
           <div>{loadTypes[load.degree + 4]}</div>
           <div>{load.psName}</div>
           <div>{getRounded(load.peak, precision)}</div>
@@ -176,13 +198,13 @@ function SupportTable({ support }: { support: ISupport }) {
         </Icon>
       </summary>
       <div className="grid grid-cols-4 px-4 py-1">
-        <div className="col-span-2">
+        <div className="col-span-2 flex flex-col gap-1">
           <div>Type</div>
           <div>Location</div>
           <div>Normal</div>
           <div>Settlement</div>
         </div>
-        <div className="col-span-2">
+        <div className="col-span-2 flex flex-col gap-1">
           <div>{support.type}</div>
           <div>
             <span>{getRounded(support.location[0], precision)}</span>,{" "}

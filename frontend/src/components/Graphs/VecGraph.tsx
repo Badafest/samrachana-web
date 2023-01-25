@@ -5,11 +5,11 @@ import { snapToPoint } from "../../utils/snapFunctions";
 import Graph from "../Elements/Graph";
 import { getRounded } from "../Elements/Graph/functions";
 
-export default function SimGraph() {
+export default function VecGraph() {
   const {
-    sim_grid_color,
-    sim_grid_dots,
-    sim_grid_opacity,
+    vec_grid_color,
+    vec_grid_dots,
+    vec_grid_opacity,
     seg_plot_color,
     seg_plot_width,
     afd_plot_color,
@@ -178,9 +178,9 @@ export default function SimGraph() {
   return (
     <>
       <Graph
-        color={sim_grid_color}
-        dots={sim_grid_dots}
-        opacity={sim_grid_opacity}
+        color={vec_grid_color}
+        dots={vec_grid_dots}
+        opacity={vec_grid_opacity}
         updateFunction={updateFunction}
         updateDependency={[Object.values(show)]}
         onToolMouseMove={onToolMouseMove}
@@ -189,7 +189,6 @@ export default function SimGraph() {
         <button
           className="absolute -top-6 bg-primary_light border-4 border-primary text-secondary p-1 rounded w-max"
           onClick={() => {
-            console.log(collapse);
             setCollapse((prev) => !prev);
           }}
         >

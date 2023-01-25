@@ -1,8 +1,8 @@
 import { useAppSelector } from "../../store";
 import Graph from "../Elements/Graph";
 
-export default function LineGraph() {
-  const { line_grid_color, line_grid_dots, line_grid_opacity } = useAppSelector(
+export default function AnimGraph() {
+  const { anim_grid_color, anim_grid_dots, anim_grid_opacity } = useAppSelector(
     (state) => state.settings.data
   );
 
@@ -20,9 +20,9 @@ export default function LineGraph() {
 
   return (
     <Graph
-      color={line_grid_color}
-      dots={line_grid_dots}
-      opacity={line_grid_opacity}
+      color={anim_grid_color}
+      dots={anim_grid_dots}
+      opacity={anim_grid_opacity}
       updateFunction={updateFunction}
     />
   );
