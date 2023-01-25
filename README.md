@@ -12,10 +12,6 @@
 
 Samrachana is a free and open source structural analysis software based on Direct Stiffness Method. It is ideal for analysing 2D beams, frames and trusses.
 
-The current version `version 0.x` is named after ancient Nepali architect Araniko. The version `0.1` is `pre-release` and thus is susceptible to bugs and issues.
-
-> Learn more about the [versioning system we follow](https://link-to-docs-versioning).
-
 > If you find a bug or an issue, kindly post it in the [discussion forum](https://github.com/badafest/samrachana-web/discussions)
 
 ---
@@ -24,7 +20,7 @@ The current version `version 0.x` is named after ancient Nepali architect Aranik
 
 1.  ##### Windows
 
-    > Although you can install Samrachana as an executable application, we don't recommend that when the version is labelled `pre-release`. Please wait until the label changes to `beta` or `stable`.
+    > Although you can install Samrachana as an executable application, I don't recommend that right now.
 
     To install Samrachana on Windows, you can download installer from [here](https://link-to-installer) and simply run it. After the installation is completed, you can launch Samrachana just like you launch any other software.
 
@@ -50,8 +46,8 @@ The current version `version 0.x` is named after ancient Nepali architect Aranik
          on top right.
 
     4.  Create a virtual environmant and run `activate` by typing these on your terminal(Optional).  
-        Replace `directory-of-cloned-repo` by the actual directory in which the repo is cloned. It is `Samrachana-Araniko` by default.  
-        The second line creates virtual environment in a hidden folder titled `venv` inside the directory.  
+        Replace `directory-of-cloned-repo` by the actual directory in which the repo is cloned. It is `samrachana-web` by default.  
+        The second line creates virtual environment in a hidden folder titled `.venv` inside the directory.  
         [(You can find the details Here)](https://docs.python.org/3/library/venv.html)  
         The last line activates virtual environment so that the dependencies are not installed globally.
 
@@ -74,14 +70,20 @@ The current version `version 0.x` is named after ancient Nepali architect Aranik
         npm install
         ```
 
-    7.  Make `env` file from `env.example` and run the server: [For general user, the commented values should work just fine]
+    7.  Make `.env` file from `.env.example` and run the server: [For general user, the commented values should work just fine]
 
         ```
 
         npm run dev
         ```
 
-        > Currently only the server is implemented. You can run python functions by sending a POST request with `func` and `params` in json body
+    8.  To setup frontend, first `cd` to `frontend`, install the package by `npm install` and then make `.env` file from `.env.example`. Then run the development server:
+
+        ```
+        npm run dev
+        ```
+
+        You can then use the address shown in terminal to open samrachana on broswer.
 
 ---
 
