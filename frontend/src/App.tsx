@@ -94,16 +94,16 @@ function MultiViews() {
     case "3H":
       return (
         <ThreeViewsHz
-          ViewLeft={DefaultMainView}
-          ViewRightTop={DefaultTableView}
-          ViewRightBottom={DefaultSimView}
+          ViewLeft={DefaultSimView}
+          ViewRightTop={DefaultMainView}
+          ViewRightBottom={DefaultTableView}
         />
       );
     case "3V":
       return (
         <ThreeViewsVt
-          ViewTop={DefaultSimView}
-          ViewBottomLeft={DefaultMainView}
+          ViewTop={DefaultMainView}
+          ViewBottomLeft={DefaultSimView}
           ViewBottomRight={DefaultTableView}
         />
       );
@@ -111,9 +111,9 @@ function MultiViews() {
       return (
         <FourViews
           ViewTopLeft={DefaultMainView}
-          ViewTopRight={DefaultTreeView}
-          ViewBottomLeft={DefaultTableView}
-          ViewBottomRight={DefaultSimView}
+          ViewTopRight={DefaultSimView}
+          ViewBottomLeft={DefaultTreeView}
+          ViewBottomRight={DefaultTableView}
         />
       );
     default:

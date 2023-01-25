@@ -42,6 +42,7 @@ export default function VectorDiagramForm() {
           plots,
           options.type
         );
+        dispatch(changeAppData({ layout: "3H" }));
       } catch (error: any) {
         dispatch(
           changeAppData({

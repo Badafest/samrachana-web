@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useAppSelector } from "../../store";
-import drawPath from "../../utils/drawing";
+import drawPath, { drawText } from "../../utils/drawing";
+import { snapToPoint } from "../../utils/snapFunctions";
 import Graph from "../Elements/Graph";
+import { getRounded } from "../Elements/Graph/functions";
 
 export default function SimGraph() {
   const {
@@ -33,18 +35,21 @@ export default function SimGraph() {
     shearDisplacement: boolean;
     displacement: boolean;
     slope: boolean;
+    [key: string]: boolean;
   }
 
   const [show, setShow] = useState<IShowOptions>({
-    axialForce: false,
-    shearForce: false,
+    axialForce: true,
+    shearForce: true,
     force: false,
     moment: true,
     axialDisplacement: false,
     shearDisplacement: false,
-    displacement: false,
+    displacement: true,
     slope: false,
   });
+
+  const [collapse, setCollapse] = useState<boolean>(false);
 
   const updateFunction = (
     context: CanvasRenderingContext2D | null,
@@ -123,6 +128,53 @@ export default function SimGraph() {
     }
   };
 
+  const { precision } = useAppSelector((state) => state.settings.data);
+
+  const onToolMouseMove = (
+    context: CanvasRenderingContext2D | null,
+    zoom: number,
+    origin: [number, number],
+    active: boolean,
+    prevCoords: [number, number][],
+    tempCoords: [number, number]
+  ) => {
+    updateFunction(context, zoom, origin);
+
+    if (context) {
+      const allPoints = Object.keys(show)
+        .map((key) => {
+          if (show[key]) {
+            return diagrams[key];
+          } else {
+            return [];
+          }
+        })
+        .flat(2);
+      const allCoords = allPoints.map((x) => x.slice(1, 3)) as [
+        number,
+        number
+      ][];
+      const nearest = snapToPoint(allCoords, tempCoords);
+      const showCoords = allPoints[allCoords.indexOf(nearest)] as [
+        number,
+        number
+      ];
+      showCoords &&
+        drawText(
+          context,
+          `${getRounded(showCoords.at(-1) || 0, precision)} @ ${getRounded(
+            showCoords.at(0) || 0,
+            precision
+          )}`,
+          nearest,
+          origin,
+          zoom,
+          seg_plot_color,
+          14
+        );
+    }
+  };
+
   return (
     <>
       <Graph
@@ -131,9 +183,21 @@ export default function SimGraph() {
         opacity={sim_grid_opacity}
         updateFunction={updateFunction}
         updateDependency={[Object.values(show)]}
+        onToolMouseMove={onToolMouseMove}
       />
-      <div className="absolute left-2 bottom-2 bg-primary rounded p-2 flex gap-2 text-xs">
-        <div className="flex flex-col gap-2">
+      <div className="absolute left-2 bottom-2 bg-primary rounded flex gap-2 text-xs overflow-visible">
+        <button
+          className="absolute -top-6 bg-primary_light border-4 border-primary text-secondary p-1 rounded w-max"
+          onClick={() => {
+            console.log(collapse);
+            setCollapse((prev) => !prev);
+          }}
+        >
+          {collapse ? "show menu" : "hide menu"}
+        </button>
+        <div
+          className={`flex flex-col  ${collapse ? " h-0 w-0" : "gap-2 m-2"}`}
+        >
           <div className="bg-primary_light rounded px-4 py-2 flex gap-2">
             <input
               type="checkbox"
@@ -145,7 +209,11 @@ export default function SimGraph() {
                 setShow((prev) => ({ ...prev, axialForce: e.target.checked }))
               }
             />
-            <label className="cursor-pointer" htmlFor="axialForce">
+            <label
+              className="cursor-pointer"
+              htmlFor="axialForce"
+              style={{ color: afd_plot_color }}
+            >
               Axial Force
             </label>
           </div>
@@ -160,7 +228,11 @@ export default function SimGraph() {
                 setShow((prev) => ({ ...prev, shearForce: e.target.checked }))
               }
             />
-            <label className="cursor-pointer" htmlFor="shearForce">
+            <label
+              className="cursor-pointer"
+              htmlFor="shearForce"
+              style={{ color: sfd_plot_color }}
+            >
               Shear Force
             </label>
           </div>
@@ -175,7 +247,11 @@ export default function SimGraph() {
                 setShow((prev) => ({ ...prev, moment: e.target.checked }))
               }
             />
-            <label className="cursor-pointer" htmlFor="moment">
+            <label
+              className="cursor-pointer"
+              htmlFor="moment"
+              style={{ color: bmd_plot_color }}
+            >
               Bending Moment
             </label>
           </div>
@@ -190,12 +266,20 @@ export default function SimGraph() {
                 setShow((prev) => ({ ...prev, force: e.target.checked }))
               }
             />
-            <label className="cursor-pointer" htmlFor="force">
+            <label
+              className="cursor-pointer"
+              htmlFor="force"
+              style={{ color: rfd_plot_color }}
+            >
               Resultant Force
             </label>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
+        <div
+          className={`flex flex-col  ${
+            collapse ? " h-0 w-0" : "gap-2 m-2 ml-0"
+          }`}
+        >
           <div className="bg-primary_light rounded px-4 py-2 flex gap-2">
             <input
               type="checkbox"
@@ -210,7 +294,11 @@ export default function SimGraph() {
                 }))
               }
             />
-            <label className="cursor-pointer" htmlFor="axialDisplacement">
+            <label
+              className="cursor-pointer"
+              htmlFor="axialDisplacement"
+              style={{ color: add_plot_color }}
+            >
               Axial Displacement
             </label>
           </div>
@@ -228,7 +316,11 @@ export default function SimGraph() {
                 }))
               }
             />
-            <label className="cursor-pointer" htmlFor="shearDisplacement">
+            <label
+              className="cursor-pointer"
+              htmlFor="shearDisplacement"
+              style={{ color: sdd_plot_color }}
+            >
               Shear Displacement
             </label>
           </div>
@@ -243,7 +335,11 @@ export default function SimGraph() {
                 setShow((prev) => ({ ...prev, slope: e.target.checked }))
               }
             />
-            <label className="cursor-pointer" htmlFor="slope">
+            <label
+              className="cursor-pointer"
+              htmlFor="slope"
+              style={{ color: slp_plot_color }}
+            >
               Slope
             </label>
           </div>
@@ -258,7 +354,11 @@ export default function SimGraph() {
                 setShow((prev) => ({ ...prev, displacement: e.target.checked }))
               }
             />
-            <label className="cursor-pointer" htmlFor="displacement">
+            <label
+              className="cursor-pointer"
+              htmlFor="displacement"
+              style={{ color: rdd_plot_color }}
+            >
               Resultant Displacement
             </label>
           </div>

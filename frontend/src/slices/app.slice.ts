@@ -15,7 +15,7 @@ const initialState: IAppState = {
   data: {
     socket_id: "",
     active_tool: "select",
-    status: "everything good :)",
+    status: "Socket not connected",
     layout: "1",
     tool_coords: [],
     selected: "",

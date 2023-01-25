@@ -23,7 +23,9 @@ export default function SegmentForm({ edit }: { edit?: ISegment }) {
   );
 
   const { segments } = useAppSelector((state) => state.structure.members);
-  const { material, section } = useAppSelector((state) => state.settings.data);
+  const { material, section, units } = useAppSelector(
+    (state) => state.settings.data
+  );
   const { socket_id } = useAppSelector((state) => state.app.data);
   const dispatch = useAppDispatch();
 
@@ -106,12 +108,18 @@ export default function SegmentForm({ edit }: { edit?: ISegment }) {
       P1,
       P3,
       P2,
-      I: userSection?.Iyy || edit?.I || 1,
-      area: userSection?.A || edit?.area || 1,
-      youngsModulus: userMaterial?.E || edit?.youngsModulus || 1,
-      shearModulus: userMaterial?.G || edit?.shearModulus || 1,
-      alpha: userMaterial?.alpha || edit?.alpha || 1,
-      density: userMaterial?.density || edit?.density || 1,
+      I: (userSection?.Iyy || edit?.I || 1) / units[1] ** 4,
+      area: (userSection?.A || edit?.area || 1) / units[1] ** 2,
+      youngsModulus:
+        (units[1] ** 2 * (userMaterial?.E || edit?.youngsModulus || 1)) /
+        units[0],
+      shearModulus:
+        (units[1] ** 2 * (userMaterial?.G || edit?.shearModulus || 1)) /
+        units[0],
+      alpha: units[2] * (userMaterial?.alpha || edit?.alpha || 1),
+      density:
+        (units[1] ** 3 * (userMaterial?.density || edit?.density || 1)) /
+        units[0],
       shapeFactor: userSection?.k || edit?.shapeFactor || 1,
     };
 

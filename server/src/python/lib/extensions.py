@@ -311,7 +311,7 @@ def childOf(seg, simFrame):
     return segments[array([
         identicalObjects(
             seg, x['parent'] if
-            (x['parent'] != None or x['parent'] != "None") else x)
+            (x['parent'] != None and x['parent'] != "None") else x)
         for x in segments
     ]).nonzero()[0]]
 

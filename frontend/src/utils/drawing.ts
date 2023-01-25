@@ -44,19 +44,12 @@ export function drawText(
   context.fillStyle = color;
   context.textAlign = "center";
   context.beginPath();
-  context.ellipse(
-    pixels[0],
-    pixels[1],
-    (3 * width) / 4,
-    (3 * width) / 4,
-    0,
-    0,
-    2 * Math.PI,
-    false
-  );
+  const length = (text.length / 2 + 1) * width;
+  const height = (4 * width) / 3;
+  context.rect(pixels[0] - length / 2, pixels[1] - height / 2, length, height);
   context.fill();
   context.fillStyle = color;
   context.fillStyle = "white";
-  context.fillText(text, pixels[0], pixels[1] + width / 3, width);
+  context.fillText(text, pixels[0], pixels[1] + width / 3, text.length * width);
   context.closePath();
 }

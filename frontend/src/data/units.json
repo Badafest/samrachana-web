@@ -35,12 +35,7 @@
     "Symbol": "tf",
     "Conversion": 9806.65
   },
-  {
-    "System": "SI",
-    "Quantity": "Force",
-    "Symbol": "Custom",
-    "Conversion": 1
-  },
+
   {
     "System": "SI",
     "Quantity": "Length",
@@ -65,58 +60,47 @@
     "Symbol": "dam",
     "Conversion": 10
   },
-  {
-    "System": "SI",
-    "Quantity": "Length",
-    "Symbol": "Custom",
-    "Conversion": 10
-  },
+
   {
     "System": "ENG",
     "Quantity": "Force",
     "Symbol": "pdl",
-    "Conversion": 1
+    "Conversion": 0.1382549544
   },
   {
     "System": "ENG",
     "Quantity": "Force",
     "Symbol": "lbf",
-    "Conversion": 32.1740485564304
+    "Conversion": 4.44822
   },
   {
     "System": "ENG",
     "Quantity": "Force",
     "Symbol": "ozf",
-    "Conversion": 2.0108780347769
+    "Conversion": 0.278013851
   },
   {
     "System": "ENG",
     "Quantity": "Force",
     "Symbol": "kip",
-    "Conversion": 32174.0485564304
-  },
-  {
-    "System": "ENG",
-    "Quantity": "Force",
-    "Symbol": "Custom",
-    "Conversion": 32174.0485564304
+    "Conversion": 4448.2216
   },
   {
     "System": "ENG",
     "Quantity": "Length",
     "Symbol": "ft",
-    "Conversion": 1
+    "Conversion": 0.3048
   },
   {
     "System": "ENG",
     "Quantity": "Length",
     "Symbol": "in",
-    "Conversion": 0.083333333333333
+    "Conversion": 0.0254
   },
   {
     "System": "ENG",
     "Quantity": "Length",
-    "Symbol": "Custom",
-    "Conversion": 3
+    "Symbol": "yard",
+    "Conversion": 0.9144
   }
 ]

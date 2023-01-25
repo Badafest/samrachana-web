@@ -101,7 +101,7 @@ export default function MainGraph() {
         );
       });
       dispatch(changeAppData({ selected: newSelected || "" }));
-    } else {
+    } else if (!["analyse", "vector"].includes(active_tool)) {
       dispatch(updateToolCoords(tempCoords));
     }
   };

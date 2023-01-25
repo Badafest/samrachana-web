@@ -58,14 +58,15 @@ export interface IAnalysisData {
 
 export interface IDiagramsData {
   segments: string[];
-  axialForce?: number[][][];
-  shearForce?: number[][][];
-  force?: number[][][];
-  moment?: number[][][];
-  axialDisplacement?: number[][][];
-  shearDisplacement?: number[][][];
-  displacement?: number[][][];
-  slope?: number[][][];
+  axialForce: number[][][];
+  shearForce: number[][][];
+  force: number[][][];
+  moment: number[][][];
+  axialDisplacement: number[][][];
+  shearDisplacement: number[][][];
+  displacement: number[][][];
+  slope: number[][][];
+  [key: string]: number[][][] | string[];
 }
 
 export interface IStructure {

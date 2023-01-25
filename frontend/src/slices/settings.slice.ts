@@ -5,7 +5,7 @@ interface ISettingsState {
     theme: "platinum" | "user";
     material: string;
     section: string;
-    units: string;
+    units: [number, number, number];
     precision: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
     main_grid_color: string;
     main_grid_opacity: number;
@@ -43,7 +43,7 @@ const initialState: ISettingsState = {
         theme: "user",
         material: "Default",
         section: "DEFAULT",
-        units: "N m C",
+        units: [1, 1, 1],
         precision: 3,
         main_grid_color: "#000000",
         main_grid_opacity: 0.5,
@@ -59,14 +59,14 @@ const initialState: ISettingsState = {
         sim_grid_color: "#000000",
         sim_grid_opacity: 0.5,
         sim_grid_dots: false,
-        afd_plot_color: "#d53459",
-        sfd_plot_color: "#d53459",
+        afd_plot_color: "#c521bb",
+        sfd_plot_color: "#229959",
         bmd_plot_color: "#d53459",
-        rfd_plot_color: "#d53459",
-        add_plot_color: "#d53459",
-        sdd_plot_color: "#d53459",
+        rfd_plot_color: "#23321f",
+        add_plot_color: "#c521bb",
+        sdd_plot_color: "#229959",
         slp_plot_color: "#d53459",
-        rdd_plot_color: "#d53459",
+        rdd_plot_color: "#23321f",
         line_grid_color: "#000000",
         line_grid_opacity: 0.5,
         line_grid_dots: false,
@@ -79,7 +79,11 @@ export const settingsSlice = createSlice({
   reducers: {
     changeSetting: (
       state,
-      { payload }: PayloadAction<Record<string, string | number | boolean>>
+      {
+        payload,
+      }: PayloadAction<
+        Record<string, string | number | boolean | [number, number, number]>
+      >
     ) => {
       state.data = { ...state.data, ...payload };
       localStorage.setItem("settings", JSON.stringify(state.data));
