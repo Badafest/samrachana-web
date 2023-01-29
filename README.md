@@ -22,19 +22,25 @@ Samrachana is a free and open source structural analysis software based on Direc
 
     > Although you can install Samrachana as an executable application, I don't recommend that right now.
 
-    To install Samrachana on Windows, you can download installer from [here](https://link-to-installer) and simply run it. After the installation is completed, you can launch Samrachana just like you launch any other software.
+    To install Samrachana on Windows, you can download installer from [here](https://github.com/Badafest/samrachana-web/releases/download/v1.0.0/samrachana-1.0.0.Setup.exe) and simply run it. After the installation is completed, you can launch Samrachana just like you launch any other software.
+
+    > Samrachana is installed in `~/AppData/Local/samrachana` by default. To uninsall it, tun this command on your terminal:
+
+    ```
+    remove-item ~/AppData/Local/samrachana
+    ```
 
 2.  ##### MacOS, Linux or other OS [^1]
 
     [^1]: Installers for these systems will be available soon.
 
-    At the moment, no installer is available for operration systems other than windows. So, the only option is to [build from source](#build-from-source).
+    At the moment, no installer is available for operration systems other than windows. So, the only option is to [setup development](#setup-development).
 
-3.  ##### Build from source [^2]
+3.  ##### Setup Development [^2]
 
     [^2]: If you want to contribute, please refer [For Developers](#for-developers) section.
 
-    If you just want to try out Samrachana, or want to contribute to this repository, the best way to install it is to build from scratch. You can follow these steps to build from source:
+    If you just want to try out Samrachana, or want to contribute to this repository, the best way to install it is this way. You can follow these steps to setup development environment:
 
     1.  Install `Python3.8.5` in your computer. [Official Downloads](https://www.python.org/ftp/python/3.8.5)
     2.  Install `Node 18` in your computre. [Official Downloads](https://nodejs.org/dist/v18.13.0)
@@ -91,15 +97,13 @@ Samrachana is a free and open source structural analysis software based on Direc
 
 Samrachana is made keeping users interested in function rather than interface of the application in mind. So, the learning curve of interface is as straight as possible. You can start by playing around with different functions on a simply supported beam. A video demonstrating how you can get your feet wet with Samrachana can be found [here](https://link-to-video).
 
-For detail documentation of all the features available, refer to the docs [here](https://link-to-docs).
+For detail documentation of all the features available, refer to the docs [here](https://github.com/Badafest/samrachana-web/wiki).
 
 ---
 
 ### For Developers
 
 If you are interested in contributing to this repository and make Samrachana a better software, you can start by reading the [CONTRIBUTING markdown file](./CONTRIBUTING.md).
-
-Note that, Samrachana is entirely written in `python` and requires python to be installed in your system. Currently, we are working with `python3.8.5`. For the sake of compatibility, please install the same version.
 
 Other dependencies can be installed in virtual environment. The required packages are listed in [requirements text file](src/requirements.txt).
 

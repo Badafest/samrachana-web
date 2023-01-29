@@ -177,6 +177,7 @@ def main():
 
     else:
         stdOutArray(output)
-
+    
+    sys.stdout.flush()
 
 main()
