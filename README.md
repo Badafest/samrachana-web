@@ -24,7 +24,7 @@ Samrachana is a free and open source structural analysis software based on Direc
 
     To install Samrachana on Windows, you can download installer from [here](https://github.com/Badafest/samrachana-web/releases/download/v1.0.0/samrachana-1.0.0.Setup.exe) and simply run it. After the installation is completed, you can launch Samrachana just like you launch any other software.
 
-    > Samrachana is installed in `~/AppData/Local/samrachana` by default. To uninsall it, tun this command on your terminal:
+    > Samrachana is installed in `~/AppData/Local/samrachana` by default. To uninsall it, run this command on your terminal:
 
     ```
     remove-item ~/AppData/Local/samrachana
