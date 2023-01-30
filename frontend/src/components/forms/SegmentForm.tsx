@@ -125,6 +125,11 @@ export default function SegmentForm({ edit }: { edit?: ISegment }) {
 
     dispatch(deleteSegment(edit?.name || ""));
     try {
+      const length = Math.hypot(P1[0] - P3[0], P1[1] - P3[1]);
+      if (length === 0) {
+        dispatch(clearToolCoords());
+        throw new Error("Segment should have non zero length");
+      }
       await getSegmentPlotData(newSegment, socket_id);
       dispatch(addSegment(newSegment));
       dispatch(changeAppData({ status: `${name} added to structure!` }));

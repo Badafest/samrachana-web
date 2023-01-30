@@ -19,12 +19,7 @@ const supportTypes = {
   roller: "Roller",
   internal_hinge: "Internal Hinge",
   node: "Node",
-  custom: {
-    Fx: "100",
-    M: "001",
-    FyM: "011",
-    FxM: "101",
-  },
+  custom: "100",
 };
 
 type TSupportTypes =
@@ -81,6 +76,7 @@ export default function SupportForm({ edit }: { edit?: ISupport }) {
             | "internal_hinge"
             | "roller"
             | "node"
+            | "custom"
         ] as TSupportTypes
       );
     }

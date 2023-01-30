@@ -117,11 +117,15 @@ export default function useEvents(
         const newZoom = event.deltaY > 0 ? prev * 0.8 : prev * 1.2;
         const finalZoom =
           newZoom <= 10 ? 10 : newZoom >= 1000 ? 1000 : Math.round(newZoom);
-        const tempCoords: [number, number] = [
-          lastCoords[0] * (1 - finalZoom),
-          lastCoords[1] * (1 - finalZoom),
-        ];
-        // setOrigin((prev) => updateOrigin(prev, tempCoords, lastCoords));
+        const newCoords: [number, number] = getCoordinates(
+          context,
+          event.clientX,
+          event.clientY,
+          origin[0],
+          origin[1],
+          finalZoom
+        );
+        setOrigin((prev) => updateOrigin(prev, newCoords, lastCoords));
         return finalZoom;
       });
     }

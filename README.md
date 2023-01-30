@@ -95,8 +95,7 @@ Samrachana is a free and open source structural analysis software based on Direc
 
 ### Getting Started
 
-Samrachana is made keeping users interested in function rather than interface of the application in mind. So, the learning curve of interface is as straight as possible. You can start by playing around with different functions on a simply supported beam. A video demonstrating how you can get your feet wet with Samrachana can be found [here](https://link-to-video).
-
+Samrachana is made keeping users interested in function rather than interface of the application in mind. So, the learning curve of interface is as straight as possible. The basic keyboard shortcuts are shown in the right sidebar when there is no other form to show.
 For detail documentation of all the features available, refer to the docs [here](https://github.com/Badafest/samrachana-web/wiki).
 
 ---

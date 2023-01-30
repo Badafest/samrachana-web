@@ -6,6 +6,7 @@ import LoadForm from "./forms/LoadForm";
 import EditDeleteForm from "./forms/EditDeleteForm";
 import AnalyseForm from "./forms/AnalyseForm";
 import VectorDiagramForm from "./forms/VectorDiagramForm";
+import shortcuts from "../data/keyboard.json";
 
 export default function RightSideBar() {
   const { active_tool } = useAppSelector((state) => state.app.data);
@@ -47,6 +48,31 @@ function ToolForm({ active_tool }: { active_tool: string }) {
     return <VectorDiagramForm />;
   }
   {
-    return <></>;
+    return <ShortcutHint />;
   }
+}
+
+function ShortcutHint() {
+  return (
+    <div className="h-[90vh] overflow-auto flex flex-col gap-2 pr-2">
+      {Object.keys(shortcuts).map((key, index) => (
+        <div
+          key={index}
+          className="text-sm flex-shrink-0 bg-primary_light p-2 rounded"
+        >
+          <div>
+            PRESS{" "}
+            <span className="bg-primary inline-flex items-center justify-center w-6 h-6 rounded">
+              {key.slice(0, 3)}
+            </span>{" "}
+            TO
+          </div>
+          <div>
+            {tools.find((item) => item.name === (shortcuts as any)[key])
+              ?.hint || "See this hint"}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }

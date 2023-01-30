@@ -2,8 +2,6 @@ import { useDispatch } from "react-redux";
 import { changeAppData, clearToolCoords } from "../slices/app.slice";
 import shortcuts from "../data/keyboard.json";
 
-type TShortcut = "l" | "a" | "q" | "x";
-
 export default function useKeypressHandler() {
   const dispatch = useDispatch();
   return function keypressHandler(event: any) {
@@ -16,7 +14,7 @@ export default function useKeypressHandler() {
       dispatch(clearToolCoords());
       dispatch(
         changeAppData({
-          active_tool: shortcuts[event.key as TShortcut],
+          active_tool: (shortcuts as any)[event.key],
         })
       );
     }

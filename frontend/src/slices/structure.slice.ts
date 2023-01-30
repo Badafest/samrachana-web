@@ -95,47 +95,49 @@ export interface IStructure {
 
 const userStructure = localStorage.getItem("structure");
 
-const initialState: IStructure = userStructure
-  ? (JSON.parse(userStructure) as IStructure)
-  : {
-      members: {
-        segments: [],
-        loads: [],
-        supports: [],
+export const defaultStructure: IStructure = {
+  members: {
+    segments: [],
+    loads: [],
+    supports: [],
+  },
+  data: {
+    plot: {},
+    analysis: {
+      options: {
+        type: "frame",
+        inextensible: true,
+        simplify: true,
+        accuracy: 0.995,
       },
+      nodes: [],
       data: {
-        plot: {},
-        analysis: {
-          options: {
-            type: "frame",
-            inextensible: true,
-            simplify: true,
-            accuracy: 0.995,
-          },
-          nodes: [],
-          data: {
-            simplified: {},
-            memLoc: [],
-            actionRaw: [],
-            action: [],
-            response: [],
-            responseRaw: [],
-            reactions: [],
-          },
-        },
-        diagrams: {
-          segments: [],
-          axialForce: [],
-          shearForce: [],
-          force: [],
-          moment: [],
-          axialDisplacement: [],
-          shearDisplacement: [],
-          displacement: [],
-          slope: [],
-        },
+        simplified: {},
+        memLoc: [],
+        actionRaw: [],
+        action: [],
+        response: [],
+        responseRaw: [],
+        reactions: [],
       },
-    };
+    },
+    diagrams: {
+      segments: [],
+      axialForce: [],
+      shearForce: [],
+      force: [],
+      moment: [],
+      axialDisplacement: [],
+      shearDisplacement: [],
+      displacement: [],
+      slope: [],
+    },
+  },
+};
+
+export const initialState: IStructure = userStructure
+  ? { ...defaultStructure, ...JSON.parse(userStructure) }
+  : defaultStructure;
 
 export const structureSlice = createSlice({
   name: "structure",

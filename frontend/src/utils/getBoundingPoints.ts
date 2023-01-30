@@ -1,8 +1,8 @@
 export default function getBoundingPoints(data: [number, number][]) {
   const X = data.map((p) => p[0]);
   const Y = data.map((p) => p[1]);
-  const topLeft = [Math.min(...X), Math.max(...Y)];
-  const bottomRight = [Math.max(...X), Math.min(...Y)];
+  const topLeft = [0.99 * Math.min(...X), 1.01 * Math.max(...Y)];
+  const bottomRight = [1.01 * Math.max(...X), 0.99 * Math.min(...Y)];
   return [topLeft, bottomRight] as [number, number][];
 }
 

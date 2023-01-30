@@ -7,16 +7,13 @@ async function Controller(req: Request, res: Response) {
   const { user_id, func, param } = req.body;
 
   try {
-    const ls = spawn(ENV.PYTHON, [
-      ENV.CWD + "/src/python/app.py",
-      func,
-      JSON.stringify(param),
-    ]);
+    const ls = ENV.SCRIPT
+      ? spawn(ENV.PYTHON, [ENV.SCRIPT, func, JSON.stringify(param)])
+      : spawn(ENV.PYTHON, [func, JSON.stringify(param)]);
 
     const sendData = async (data: any) => {
       ls.stdout.removeAllListeners();
       ls.stderr.removeAllListeners();
-      console.log(data.toString());
       const client = await socketService.getClient(user_id);
       if (client && client.socket) {
         client.socket.send(

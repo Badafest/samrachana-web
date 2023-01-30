@@ -34,7 +34,10 @@ function App() {
       const ws = new WebSocket(import.meta.env.VITE_WS_URL);
       setSocket(ws);
     }
-    addEventListener("keypress", keypressHandler);
+    addEventListener("keydown", keypressHandler);
+    return () => {
+      removeEventListener("keydown", keypressHandler);
+    };
   }, []);
 
   const socketMessageHandler = useMessageHandler();

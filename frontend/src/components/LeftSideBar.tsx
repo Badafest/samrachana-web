@@ -4,7 +4,7 @@ import Icon from "./Elements/Icon";
 import themes from "../themes/themes.json";
 import { useState, useRef } from "react";
 import { changeSetting } from "../slices/settings.slice";
-import { loadJson } from "../slices/structure.slice";
+import { defaultStructure, loadJson } from "../slices/structure.slice";
 
 export default function LeftSideBar() {
   return (
@@ -19,6 +19,7 @@ export default function LeftSideBar() {
       </div>
       <div className="flex flex-col gap-1 p-1">
         <OpenIcon />
+        <ClearIcon />
         <JsonIcon />
         <SettingsIcon />
       </div>
@@ -63,6 +64,21 @@ function SettingsIcon() {
       </Icon>
       {show && <SettingsForm />}
     </>
+  );
+}
+
+function ClearIcon() {
+  const dispatch = useAppDispatch();
+  return (
+    <Icon
+      className="bg-primary_light border text-secondary active-border-secondary"
+      onClick={() => {
+        dispatch(loadJson(defaultStructure));
+        localStorage.setItem("structure", JSON.stringify(defaultStructure));
+      }}
+    >
+      <span className="icon font-bold text-3xl"> &#215;</span>
+    </Icon>
   );
 }
 

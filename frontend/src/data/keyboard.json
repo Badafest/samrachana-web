@@ -12,10 +12,12 @@
   "u": "uniform",
   "m": "moment",
   "v": "linear",
-  "w": "parabolic",
+  "w": "quadratic",
   "z": "cubic",
   "t": "temperature",
   "s": "misfit",
-  " ": "analyse",
-  "x": "select"
+  ",": "analyse",
+  ".": "vector",
+  "x": "select",
+  "Escape": "none"
 }

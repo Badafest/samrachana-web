@@ -14,7 +14,7 @@ interface IAppState {
 const initialState: IAppState = {
   data: {
     socket_id: "",
-    active_tool: "select",
+    active_tool: "none",
     status: "Socket not connected",
     layout: "1",
     tool_coords: [],

@@ -116,7 +116,7 @@ export default function MainGraph() {
   ) => {
     if (context) {
       updateFunction(context, zoom, origin);
-      if (active_tool !== "select") {
+      if (!["select", "none"].includes(active_tool)) {
         tool_coords.length &&
           tool_coords.length < 3 &&
           drawPath(
