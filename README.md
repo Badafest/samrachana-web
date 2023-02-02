@@ -37,11 +37,11 @@ Samrachana is a free and open source structural analysis software based on Direc
     remove-item ~/AppData/Local/samrachana
     ```
 
-2.  ##### MacOS, Linux or other OS [^1]
-
-    [^1]: Installers for these systems will be available soon.
+2.  ##### MacOS, Linux or other OS
 
     At the moment, no installer is available for operration systems other than windows. So, the only option is to [setup development](#setup-development).
+
+    > You can use `electronJS` to compile samrachana-web into desktop app for your operating stystem. This is how, I have prepared setup file for windows 🤐🤐🤐
 
 3.  ##### Setup Development [^2]
 
@@ -109,7 +109,8 @@ For detail documentation of all the features available, refer to the docs [here]
 
 If you are interested in contributing to this repository and make Samrachana a better software, you can start by reading the [CONTRIBUTING markdown file](./CONTRIBUTING.md).
 
-If you are intereseted in contributing [write me a mail](mailto:er.sandipdahal@gmail.com).
+| [Write me a Mail](mailto:er.sandipdahal@gmail.com) describing how you would contribute |
+| -------------------------------------------------------------------------------------- |
 
 ---
 
