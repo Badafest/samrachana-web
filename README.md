@@ -39,7 +39,7 @@ Samrachana is a free and open source structural analysis software based on Direc
 
 2.  ##### MacOS, Linux or other OS
 
-    At the moment, no installer is available for operration systems other than windows. So, the only option is to [setup development](#setup-development).
+    At the moment, no installer is available for operating systems other than windows. So, the only option is to [setup development](#setup-development).
 
     > You can use `electronJS` to compile samrachana-web into desktop app for your operating stystem. This is how, I have prepared setup file for windows 🤐🤐🤐
 
