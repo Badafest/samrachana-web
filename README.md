@@ -24,6 +24,8 @@ Samrachana is a free and open source structural analysis software based on Direc
 
     To install Samrachana on Windows, you can download installer from [here](https://github.com/Badafest/samrachana-web/releases/download/v1.0.0/samrachana-1.0.0.Setup.exe) and simply run it. After the installation is completed, you can launch Samrachana just like you launch any other software.
 
+    > To avoid fetching the executable time and again, **Pin to Taskbar** during the first run.
+
     > Samrachana is installed in `~/AppData/Local/samrachana` by default. To uninsall it, run this command on your terminal:
 
     ```
@@ -43,7 +45,7 @@ Samrachana is a free and open source structural analysis software based on Direc
     If you just want to try out Samrachana, or want to contribute to this repository, the best way to install it is this way. You can follow these steps to setup development environment:
 
     1.  Install `Python3.8.5` in your computer. [Official Downloads](https://www.python.org/ftp/python/3.8.5)
-    2.  Install `Node 18` in your computre. [Official Downloads](https://nodejs.org/dist/v18.13.0)
+    2.  Install `Node 18` in your computer. [Official Downloads](https://nodejs.org/dist/v18.13.0)
     3.  Clone the repository by typing this in your terminal:  
          `git clone https://github.com/badafest/samrachana-web.git`
 
@@ -72,14 +74,12 @@ Samrachana is a free and open source structural analysis software based on Direc
     6.  Install `node_modules`:
 
         ```
-
         npm install
         ```
 
     7.  Make `.env` file from `.env.example` and run the server: [For general user, the commented values should work just fine]
 
         ```
-
         npm run dev
         ```
 
@@ -104,7 +104,7 @@ For detail documentation of all the features available, refer to the docs [here]
 
 If you are interested in contributing to this repository and make Samrachana a better software, you can start by reading the [CONTRIBUTING markdown file](./CONTRIBUTING.md).
 
-Other dependencies can be installed in virtual environment. The required packages are listed in [requirements text file](src/requirements.txt).
+If you are intereseted in contributing [write me a mail](mailto:er.sandipdahal@gmail.com).
 
 ---
 
