@@ -16,6 +16,11 @@ Samrachana is a free and open source structural analysis software based on Direc
 
 ---
 
+| [Go To Tutorials](https://github.com/Badafest/samrachana-web/wiki) | [See Releases](https://github.com/Badafest/samrachana-web/releases) | [See Issues](https://github.com/Badafest/samrachana-web/issues) |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------- | --------------------------------------------------------------- |
+
+---
+
 ### Installation
 
 1.  ##### Windows
