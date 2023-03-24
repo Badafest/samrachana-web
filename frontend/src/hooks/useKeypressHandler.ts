@@ -5,7 +5,7 @@ import shortcuts from "../data/keyboard.json";
 export default function useKeypressHandler() {
   const dispatch = useDispatch();
   return function keypressHandler(event: any) {
-    const target = event.target?.tagname;
+    const target = event.target?.tagName;
     if (target === "INPUT") {
       return;
     }

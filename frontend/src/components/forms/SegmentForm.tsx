@@ -243,7 +243,7 @@ export default function SegmentForm({ edit }: { edit?: ISegment }) {
             className="bg-primary rounded py-1 px-2 text-secondary outline-none border focus-border-secondary"
             value={P2[0]}
             onChange={(e) => {
-              setP3((prev) => [parseFloat(e.target.value), prev[1]]);
+              setP2((prev) => [parseFloat(e.target.value), prev[1]]);
             }}
           />
           <input
@@ -254,7 +254,7 @@ export default function SegmentForm({ edit }: { edit?: ISegment }) {
             className="bg-primary rounded py-1 px-2 text-secondary outline-none border focus-border-secondary"
             value={P2[1]}
             onChange={(e) => {
-              setP3((prev) => [prev[0], parseFloat(e.target.value)]);
+              setP2((prev) => [prev[0], parseFloat(e.target.value)]);
             }}
           />
         </div>
