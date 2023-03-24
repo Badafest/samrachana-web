@@ -8,8 +8,8 @@
   },
   "scripts": {
     "dev": "nodemon index.ts",
-    "start": "node dist/index.js",
-    "build": "npx tsc"
+    "start": "node index.js",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,6 @@
     "@types/ws": "^8.5.4",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
-    "tsc": "^2.0.4",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   }
 }

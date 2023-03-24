@@ -25,7 +25,7 @@ Samrachana is a free and open source structural analysis software based on Direc
 
 1.  ##### Windows
 
-    > Although you can install Samrachana as an executable application, I don't recommend that right now.
+    > Although you can install Samrachana as an executable application, I don't recommend that right now. Consider using `build.ps1` instead.
 
     To install Samrachana on Windows, you can download installer from [here](https://github.com/Badafest/samrachana-web/releases/download/v1.0.0/samrachana-1.0.0.Setup.exe) and simply run it. After the installation is completed, you can launch Samrachana just like you launch any other software.
 
@@ -39,13 +39,26 @@ Samrachana is a free and open source structural analysis software based on Direc
 
 2.  ##### MacOS, Linux or other OS
 
-    At the moment, no installer is available for operating systems other than windows. So, the only option is to [setup development](#setup-development).
+    At the moment, no installer is available for operating systems other than windows. So, the only option is to [build from source](#build-from-source) or [setup development](#setup-development).
 
     > You can use `electronJS` to compile samrachana-web into desktop app for your operating stystem. This is how, I have prepared setup file for windows 🤐🤐🤐
 
-3.  ##### Setup Development [^2]
+3.  ##### Build from Source
 
-    [^2]: If you want to contribute, please refer [For Developers](#for-developers) section.
+    Install `Python3.8.5` and `Node 18`, and then clone the repository (see `step i-iii` of [setup development](#setup-development)) and then run `build.sh` or `build.ps1` from terminal.
+
+    Once built, just run `run.sh` or `run.ps1` to start Samrachana whenever required. Note that, Samrachana runs on browser. When the server is running, going to `http://localhost:8000` should open the application.
+
+    ```
+    git clone https://github.com/badafest/samrachana-web.git
+    cd samrachana-web
+    ./build.sh
+
+    ```
+
+4.  ##### Setup Development [^1]
+
+    [^1]: If you want to contribute, please refer [For Developers](#for-developers) section.
 
     If you just want to try out Samrachana, or want to contribute to this repository, the best way to install it is this way. You can follow these steps to setup development environment:
 

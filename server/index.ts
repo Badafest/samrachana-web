@@ -24,4 +24,5 @@ wss.on("connection", async function (ws: WebSocket, request: any) {
 
 server.listen(ENV.PORT, async () => {
   console.log("server listening on port => ", ENV.PORT);
+  console.log("Open Samrachana in browser => http://localhost:8000");
 });
